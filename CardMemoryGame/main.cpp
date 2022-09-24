@@ -8,7 +8,7 @@ int main() {
     ALLEGRO_TIMER* timer = al_create_timer(1.0/60);
     al_set_window_title(display, "Memory Game"); //Da o nome do "Display"
     ALLEGRO_EVENT_QUEUE* queue = al_create_event_queue(); //Cria uma fila de eventos
-
+    //Comentário
  //-------------------------------FILA DE EVENTOS---------------------------------//
     al_install_mouse();
 
