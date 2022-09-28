@@ -1,5 +1,6 @@
 #include <allegro5\allegro5.h>
 #include <queue>
+#include "destroyGame.h"
 
 int main() {
 //-------------------------------DISPLAY---------------------------------//
@@ -34,7 +35,6 @@ int main() {
         }
     }
 
-    al_destroy_display(display);
-    al_destroy_timer(timer);
+    destroyGame(display, timer);
     return 0;
 }
