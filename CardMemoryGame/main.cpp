@@ -1,6 +1,7 @@
 #include <allegro5\allegro5.h>
 #include <queue>
 #include "destroyGame.h"
+#include "registerEventsSource.h"
 
 int main() {
 //-------------------------------DISPLAY---------------------------------//
@@ -11,11 +12,7 @@ int main() {
     ALLEGRO_EVENT_QUEUE* queue = al_create_event_queue(); //Cria uma fila de eventos
 
  //-------------------------------FILA DE EVENTOS---------------------------------//
-    al_install_mouse();
-
-    al_register_event_source(queue, al_get_mouse_event_source());
-    al_register_event_source(queue, al_get_display_event_source(display)); 
-    al_register_event_source(queue, al_get_timer_event_source(timer));
+    registerEventsSource(queue, display, timer);
 
     bool running = true;
     al_start_timer(timer);

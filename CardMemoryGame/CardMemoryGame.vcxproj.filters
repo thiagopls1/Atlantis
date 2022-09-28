@@ -24,9 +24,15 @@
     <ClCompile Include="destroyGame.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="registerEventsSource.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="destroyGame.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="registerEventsSource.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
