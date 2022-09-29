@@ -1,4 +1,5 @@
 #include <allegro5\allegro5.h>
+#include <allegro5/allegro_image.h>
 #include <queue>
 #include "destroyGame.h"
 #include "registerEventsSource.h"
@@ -8,11 +9,16 @@ int main() {
     al_init(); //Inicia o Allegro
     ALLEGRO_DISPLAY* display = al_create_display(1280, 720); //Dimensões do Display
     ALLEGRO_TIMER* timer = al_create_timer(1.0/60);
+    ALLEGRO_BITMAP* bitmap;
     al_set_window_title(display, "Memory Game"); //Da o nome do "Display"
     ALLEGRO_EVENT_QUEUE* queue = al_create_event_queue(); //Cria uma fila de eventos
 
  //-------------------------------FILA DE EVENTOS---------------------------------//
     registerEventsSource(queue, display, timer);
+
+    al_init_image_addon();
+    bitmap = al_load_bitmap("tile.png");
+    assert(display != NULL);
 
     bool running = true;
     al_start_timer(timer);
@@ -22,16 +28,16 @@ int main() {
         al_wait_for_event(queue, &event);
        
         if (event.type == ALLEGRO_EVENT_TIMER) {
-            al_clear_to_color(al_map_rgb(255, 150, 220));
+            al_clear_to_color(al_map_rgb(0, 150, 220));
+            al_draw_bitmap(bitmap, 0, 0, 0);
             al_flip_display();
         }
        
-        if (event.type == ALLEGRO_EVENT_DISPLAY_CLOSE) //Quando aperta "x" a janela fecha
-        {
+        if (event.type == ALLEGRO_EVENT_DISPLAY_CLOSE){
             running = false;
         }
     }
 
-    destroyGame(display, timer);
+    destroyGame(display, timer, bitmap);
     return 0;
 }
