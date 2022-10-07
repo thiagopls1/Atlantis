@@ -46,6 +46,7 @@ int main() {
         if (event.type == ALLEGRO_EVENT_TIMER) {
             al_clear_to_color(al_map_rgb(0, 150, 220));
             al_draw_bitmap(bitmap, 0, 0, 0);
+            // Cartas //
             al_draw_filled_rectangle(400, 50, 550, 250, al_map_rgb(200, 200, 200));
             al_draw_filled_rectangle(600, 50, 750, 250, al_map_rgb(200, 200, 200));
             al_draw_filled_rectangle(800, 50, 950, 250, al_map_rgb(200, 200, 200));
@@ -54,6 +55,7 @@ int main() {
             al_draw_filled_rectangle(600, 300, 750, 500, al_map_rgb(200, 200, 200));
             al_draw_filled_rectangle(800, 300, 950, 500, al_map_rgb(200, 200, 200));
             al_draw_filled_rectangle(1000, 300, 1150, 500, al_map_rgb(200, 200, 200));
+            // -------------------------------------------------------------------------//
             al_draw_rectangle(320, 700, 1250, 600, al_map_rgb(255, 255, 255), 3);
             al_draw_text(font, al_map_rgb(255, 255, 255), 330, 600, 0, dialogText);
             al_draw_circle(mouseX, mouseY, 5, al_map_rgb(255, 255, 255), 2);
