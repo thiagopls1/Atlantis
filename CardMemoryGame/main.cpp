@@ -6,7 +6,7 @@
 #include "registerEventsSource.h"
 
 int main() {
-    int x = 0, y = 0;
+    int mouseX = 0, mouseY = 0;
     int r = 255, g = 255, b = 255;
 //-------------------------------DISPLAY---------------------------------//
     al_init(); //Inicia o Allegro
@@ -27,10 +27,10 @@ int main() {
     bitmap = al_load_bitmap("tile.png");
     assert(display != NULL);
 
-    int displayX = al_get_display_width(display) / 2;
-    int displayY = al_get_display_height(display) / 2;
+    int dialogStep = 0;
     bool running = true;
     al_start_timer(timer);
+
     while (running) {
 
         ALLEGRO_EVENT event; //Gera os Eventos
@@ -39,30 +39,43 @@ int main() {
         if (event.type == ALLEGRO_EVENT_TIMER) {
             al_clear_to_color(al_map_rgb(0, 150, 220));
             al_draw_bitmap(bitmap, 0, 0, 0);
-            al_draw_rectangle(displayX - 100, displayY - 100, displayX + 100, displayY + 100, al_map_rgb(r, g, b), 3);
-            al_draw_circle(x, y, 5, al_map_rgb(255, 255, 255), 2);
+            al_draw_rectangle(320, 700, 1250, 500, al_map_rgb(r, g, b), 3);
+            al_draw_circle(mouseX, mouseY, 5, al_map_rgb(255, 255, 255), 2);
             al_flip_display();
         }
        
         // Localização do mouse
         if (event.type == ALLEGRO_EVENT_MOUSE_AXES) {
-            x = event.mouse.x;
-            y = event.mouse.y;
+            mouseX = event.mouse.x;
+            mouseY = event.mouse.y;
         }
 
         // Exemplo de ação ao clicar
         // DOWN: Clicou no botão
         // UP: Soltou o botão
         if (event.type == ALLEGRO_EVENT_MOUSE_BUTTON_DOWN){
-            if (event.mouse.button & 1 && x >= displayX - 100 && x <= displayX + 100 && y >= displayY - 100 && y <= displayY + 100) {
-                r = 0;
-                g = 0;
-                b = 0;
-            }
-            if (event.mouse.button & 2 && x >= displayX - 100 && x <= displayX + 100 && y >= displayY - 100 && y <= displayY + 100) {
-                r = 255;
-                g = 255;
-                b = 255;
+            if (event.mouse.button & 1 && mouseX >= 320 && mouseX <= 1250 && mouseY <= 700 && mouseY >= 500) {
+                switch (dialogStep) {
+                case 0:
+                    r = 0;
+                    g = 0;
+                    b = 0;
+                    dialogStep++;
+                break;
+                case 1:
+                    r = 100;
+                    g = 255;
+                    b = 100;
+                    dialogStep++;
+                break;
+                case 2:
+                    r = 255;
+                    g = 125;
+                    b = 255;
+                    dialogStep = 0;
+                break;
+                }
+                
             }
         }
 
