@@ -9,8 +9,6 @@
 #include "registerEventsSource.h"
 
 int main() {
-    int mouseX = 0, mouseY = 0;
-    int r = 255, g = 255, b = 255;
 //-------------------------------DISPLAY---------------------------------//
     al_init(); //Inicia o Allegro e os seus Addons
     al_init_image_addon();
@@ -32,8 +30,11 @@ int main() {
     bitmap = al_load_bitmap("tile.png");
     assert(display != NULL);
 
+    //-------------------------------VARIÁVEIS LOCAIS---------------------------------//
+    int mouseX = 0, mouseY = 0;
     int dialogStep = 0;
     char dialogText[1000] = {"Olha aqui o texto que legal mto brabo ele hein"};
+    //-------------------------------------------------------------------------//
     bool running = true;
     al_start_timer(timer);
 
@@ -45,7 +46,7 @@ int main() {
         if (event.type == ALLEGRO_EVENT_TIMER) {
             al_clear_to_color(al_map_rgb(0, 150, 220));
             al_draw_bitmap(bitmap, 0, 0, 0);
-            al_draw_rectangle(320, 700, 1250, 600, al_map_rgb(r, g, b), 3);
+            al_draw_rectangle(320, 700, 1250, 600, al_map_rgb(255, 255, 255), 3);
             al_draw_text(font, al_map_rgb(255, 255, 255), 330, 600, 0, dialogText);
             al_draw_circle(mouseX, mouseY, 5, al_map_rgb(255, 255, 255), 2);
             al_flip_display();
