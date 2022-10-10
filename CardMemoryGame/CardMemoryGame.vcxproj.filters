@@ -27,12 +27,27 @@
     <ClCompile Include="registerEventsSource.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="drawCards.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="mapCards.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="destroyGame.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="registerEventsSource.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="drawCards.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="cardInfo.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="mapCards.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

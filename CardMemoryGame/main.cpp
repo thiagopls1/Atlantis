@@ -7,8 +7,21 @@
 #include <string.h>
 #include "destroyGame.h"
 #include "registerEventsSource.h"
+#include "drawCards.h"
+#include "cardInfo.h"
+#include "mapCards.h"
+
+
 
 int main() {
+//-------------------------------VARIÁVEIS LOCAIS---------------------------------//
+    int mouseX = 0, mouseY = 0;
+    int dialogStep = 0;
+    char dialogText[1000] = { "Olha aqui o texto que legal mto brabo ele hein" };
+    bool running = true;
+    //-------------------------------PREENCHENDO O STRUCT---------------------------------//
+    cardInfo card[8]{};
+    mapCards(card);
 //-------------------------------DISPLAY---------------------------------//
     al_init(); //Inicia o Allegro e os seus Addons
     al_init_image_addon();
@@ -24,18 +37,9 @@ int main() {
 
  //-------------------------------FILA DE EVENTOS---------------------------------//
     registerEventsSource(queue, display, timer);
-
- //-------------------------------INICIALIZAÇÃO DE ADDONS---------------------------------//
     al_hide_mouse_cursor(display);
     bitmap = al_load_bitmap("tile.png");
     assert(display != NULL);
-
-    //-------------------------------VARIÁVEIS LOCAIS---------------------------------//
-    int mouseX = 0, mouseY = 0;
-    int dialogStep = 0;
-    char dialogText[1000] = {"Olha aqui o texto que legal mto brabo ele hein"};
-    //-------------------------------------------------------------------------//
-    bool running = true;
     al_start_timer(timer);
 
     while (running) {
@@ -46,16 +50,7 @@ int main() {
         if (event.type == ALLEGRO_EVENT_TIMER) {
             al_clear_to_color(al_map_rgb(0, 150, 220));
             al_draw_bitmap(bitmap, 0, 0, 0);
-            // Cartas //
-            al_draw_filled_rectangle(400, 50, 550, 250, al_map_rgb(200, 200, 200));
-            al_draw_filled_rectangle(600, 50, 750, 250, al_map_rgb(200, 200, 200));
-            al_draw_filled_rectangle(800, 50, 950, 250, al_map_rgb(200, 200, 200));
-            al_draw_filled_rectangle(1000, 50, 1150, 250, al_map_rgb(200, 200, 200));
-            al_draw_filled_rectangle(400, 300, 550, 500, al_map_rgb(200, 200, 200));
-            al_draw_filled_rectangle(600, 300, 750, 500, al_map_rgb(200, 200, 200));
-            al_draw_filled_rectangle(800, 300, 950, 500, al_map_rgb(200, 200, 200));
-            al_draw_filled_rectangle(1000, 300, 1150, 500, al_map_rgb(200, 200, 200));
-            // -------------------------------------------------------------------------//
+            drawCards(card);
             al_draw_rectangle(320, 700, 1250, 600, al_map_rgb(255, 255, 255), 3);
             al_draw_text(font, al_map_rgb(255, 255, 255), 330, 600, 0, dialogText);
             al_draw_circle(mouseX, mouseY, 5, al_map_rgb(255, 255, 255), 2);
@@ -72,7 +67,8 @@ int main() {
         // DOWN: Clicou no botão
         // UP: Soltou o botão
         if (event.type == ALLEGRO_EVENT_MOUSE_BUTTON_DOWN){
-            if (event.mouse.button & 1 && mouseX >= 320 && mouseX <= 1250 && mouseY <= 700 && mouseY >= 600) {
+            // Diálogo de texto
+            if (event.mouse.button = 1 && mouseX >= 320 && mouseX <= 1250 && mouseY <= 700 && mouseY >= 600) {
                 switch (dialogStep) {
                 case 0:
                     strcpy_s(dialogText, "Mais texto aqui que legal :D");
@@ -92,6 +88,15 @@ int main() {
                 break;
                 }
                 
+            }
+            // Carta clicada
+            if (event.mouse.button = 1 && mouseX >= card[0].x1 && mouseX <= card[0].x2 && mouseY >= card[0].y1 && mouseY <= card[0].y2) {
+                card[0].color = al_map_rgb(0, 0, 0);
+                card[0].cardFlipped = true;
+            }
+            if (event.mouse.button = 1 && mouseX >= card[1].x1 && mouseX <= card[1].x2 && mouseY >= card[1].y1 && mouseY <= card[1].y2) {
+                card[1].color = al_map_rgb(0, 0, 0);
+                card[1].cardFlipped = true;
             }
         }
 
