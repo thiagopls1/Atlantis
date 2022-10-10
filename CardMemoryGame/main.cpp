@@ -9,6 +9,9 @@
 #include "registerEventsSource.h"
 #include "drawCards.h"
 #include "cardInfo.h"
+#include "mapCards.h"
+
+
 
 int main() {
 //-------------------------------VARIÁVEIS LOCAIS---------------------------------//
@@ -18,19 +21,7 @@ int main() {
     bool running = true;
     //-------------------------------PREENCHENDO O STRUCT---------------------------------//
     cardInfo card[8]{};
-    int x, y;
-    x = 400;
-    y = 50;
-    for (int i = 0; i < 4; i++) {
-        card[i] = { i, false, al_map_rgb(255, 175, 255), x, y, x+150, y+200};
-        x += 200;
-    }
-    x = 400;
-    y = 300;
-    for (int i = 4; i < 8; i++) {
-        card[i] = { i, false, al_map_rgb(255, 175, 255), x, y, x + 150, y + 200 };
-        x += 200;
-    }
+    mapCards(card);
 //-------------------------------DISPLAY---------------------------------//
     al_init(); //Inicia o Allegro e os seus Addons
     al_init_image_addon();

@@ -146,12 +146,14 @@
     <ClCompile Include="destroyGame.cpp" />
     <ClCompile Include="drawCards.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="mapCards.cpp" />
     <ClCompile Include="registerEventsSource.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="destroyGame.h" />
     <ClInclude Include="drawCards.h" />
     <ClInclude Include="cardInfo.h" />
+    <ClInclude Include="mapCards.h" />
     <ClInclude Include="registerEventsSource.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
