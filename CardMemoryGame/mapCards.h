@@ -4,4 +4,3 @@
 
 void mapCards(cardInfo card[8]);
 #endif
-
