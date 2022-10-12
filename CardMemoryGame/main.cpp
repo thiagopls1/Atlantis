@@ -17,7 +17,7 @@ int main() {
 //-------------------------------VARIÁVEIS LOCAIS---------------------------------//
     int mouseX = 0, mouseY = 0;
     int dialogStep = 0;
-    char dialogText[1000] = { "Olha aqui o texto que legal mto brabo ele hein" };
+    char dialogText[1000] = { "Hello World" };
     bool running = true;
     //-------------------------------PREENCHENDO O STRUCT---------------------------------//
     cardInfo card[8]{};
@@ -71,19 +71,19 @@ int main() {
             if (event.mouse.button = 1 && mouseX >= 320 && mouseX <= 1250 && mouseY <= 700 && mouseY >= 600) {
                 switch (dialogStep) {
                 case 0:
-                    strcpy_s(dialogText, "Mais texto aqui que legal :D");
+                    strcpy_s(dialogText, "Teste de Texto 1");
                     dialogStep++;
                 break;
                 case 1:
-                    strcpy_s(dialogText, "Mais texto ainda aqui que legal!");
+                    strcpy_s(dialogText, "Teste de Texto 2");
                     dialogStep++;
                 break;
                 case 2:
-                    strcpy_s(dialogText, "Aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa '-'");
+                    strcpy_s(dialogText, "Teste de Texto 3");
                     dialogStep++;
                 break;
                 case 3:
-                    strcpy_s(dialogText, "Hello World.");
+                    strcpy_s(dialogText, "Teste de Texto 4");
                     dialogStep = 0;
                 break;
                 }
@@ -91,12 +91,36 @@ int main() {
             }
             // Carta clicada
             if (event.mouse.button = 1 && mouseX >= card[0].x1 && mouseX <= card[0].x2 && mouseY >= card[0].y1 && mouseY <= card[0].y2) {
-                card[0].color = al_map_rgb(0, 0, 0);
+                card[0].color = al_map_rgb(255, 0, 0);
                 card[0].cardFlipped = true;
             }
             if (event.mouse.button = 1 && mouseX >= card[1].x1 && mouseX <= card[1].x2 && mouseY >= card[1].y1 && mouseY <= card[1].y2) {
-                card[1].color = al_map_rgb(0, 0, 0);
+                card[1].color = al_map_rgb(0, 255, 0);
                 card[1].cardFlipped = true;
+            }
+            if (event.mouse.button = 2 && mouseX >= card[2].x1 && mouseX <= card[2].x2 && mouseY >= card[2].y1 && mouseY <= card[2].y2) {
+                card[2].color = al_map_rgb(0, 0, 0);
+                card[2].cardFlipped = true;
+            }
+            if (event.mouse.button = 3 && mouseX >= card[3].x1 && mouseX <= card[3].x2 && mouseY >= card[3].y1 && mouseY <= card[3].y2) {
+                card[3].color = al_map_rgb(255, 255, 0);
+                card[3].cardFlipped = true;
+            }
+            if (event.mouse.button = 4 && mouseX >= card[4].x1 && mouseX <= card[4].x2 && mouseY >= card[4].y1 && mouseY <= card[4].y2) {
+                card[4].color = al_map_rgb(255, 255, 0);
+                card[4].cardFlipped = true;
+            }
+            if (event.mouse.button = 5 && mouseX >= card[5].x1 && mouseX <= card[5].x2 && mouseY >= card[5].y1 && mouseY <= card[5].y2) {
+                card[5].color = al_map_rgb(255, 0, 0);
+                card[5].cardFlipped = true;
+            }
+            if (event.mouse.button = 6 && mouseX >= card[6].x1 && mouseX <= card[6].x2 && mouseY >= card[6].y1 && mouseY <= card[6].y2) {
+                card[6].color = al_map_rgb(0, 255, 0);
+                card[6].cardFlipped = true;
+            }
+            if (event.mouse.button = 7 && mouseX >= card[7].x1 && mouseX <= card[7].x2 && mouseY >= card[7].y1 && mouseY <= card[7].y2) {
+                card[7].color = al_map_rgb(0, 0, 0);
+                card[7].cardFlipped = true;
             }
         }
 
