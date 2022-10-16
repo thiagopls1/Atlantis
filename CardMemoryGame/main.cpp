@@ -8,7 +8,8 @@
 #include "destroyGame.h"
 #include "registerEventsSource.h"
 #include "drawCards.h"
-#include "cardInfo.h"
+#include "cardPos.h"
+#include "deck.h"
 #include "mapCards.h"
 
 
@@ -23,8 +24,13 @@ int main() {
     bool running = true;
     bool hasFlippedCard = false;
     //-------------------------------PREENCHENDO O STRUCT---------------------------------//
-    cardInfo card[8]{};
+    cardPos card[8]{};
     mapCards(card);
+    //-------------------------------DISPLAY---------------------------------//
+    al_init(); //Inicia o Allegro e os seus Addons
+    al_init_image_addon();
+    al_init_ttf_addon();
+    al_init_primitives_addon();
 
     // Variáveis do Allegro
     ALLEGRO_DISPLAY* display = al_create_display(1280, 720); //Dimensões do Display
@@ -33,16 +39,11 @@ int main() {
     ALLEGRO_FONT* font = al_load_ttf_font("alterebro-pixel.ttf", 40, 0);
     ALLEGRO_EVENT_QUEUE* queue = al_create_event_queue(); //Cria uma fila de eventos
 
-    //-------------------------------DISPLAY---------------------------------//
-    al_init(); //Inicia o Allegro e os seus Addons
-    al_init_image_addon();
-    al_init_ttf_addon();
-    al_init_primitives_addon();
-    al_set_window_title(display, "Memory Game"); //Da o nome do "Display"
 
  //-------------------------------FILA DE EVENTOS---------------------------------//
     registerEventsSource(queue, display, timer);
     al_hide_mouse_cursor(display);
+    al_set_window_title(display, "Memory Game");
     bitmap = al_load_bitmap("tile.png");
     assert(display != NULL);
     al_start_timer(timer);
@@ -92,45 +93,30 @@ int main() {
                     dialogStep = 0;
                 break;
                 }
-                
             }
             // Carta clicada
             if (event.mouse.button = 1 && mouseX >= card[0].x1 && mouseX <= card[0].x2 && mouseY >= card[0].y1 && mouseY <= card[0].y2 && !hasFlippedCard) {
-                card[0].color = al_map_rgb(255, 0, 0);
                 card[0].cardFlipped = true;
-                if (firstCard == NULL) {
-                    firstCard = card[0].cardPos;
-                }
-                else if(secondCard == NULL) {
-                    secondCard = card[0].cardPos;
-                }
             }
             if (event.mouse.button = 1 && mouseX >= card[1].x1 && mouseX <= card[1].x2 && mouseY >= card[1].y1 && mouseY <= card[1].y2 && !hasFlippedCard) {
-                card[1].color = al_map_rgb(0, 255, 0);
                 card[1].cardFlipped = true;
             }
             if (event.mouse.button = 2 && mouseX >= card[2].x1 && mouseX <= card[2].x2 && mouseY >= card[2].y1 && mouseY <= card[2].y2 && !hasFlippedCard) {
-                card[2].color = al_map_rgb(0, 0, 0);
                 card[2].cardFlipped = true;
             }
             if (event.mouse.button = 3 && mouseX >= card[3].x1 && mouseX <= card[3].x2 && mouseY >= card[3].y1 && mouseY <= card[3].y2 && !hasFlippedCard) {
-                card[3].color = al_map_rgb(255, 255, 0);
                 card[3].cardFlipped = true;
             }
             if (event.mouse.button = 4 && mouseX >= card[4].x1 && mouseX <= card[4].x2 && mouseY >= card[4].y1 && mouseY <= card[4].y2 && !hasFlippedCard) {
-                card[4].color = al_map_rgb(255, 255, 0);
                 card[4].cardFlipped = true;
             }
             if (event.mouse.button = 5 && mouseX >= card[5].x1 && mouseX <= card[5].x2 && mouseY >= card[5].y1 && mouseY <= card[5].y2 && !hasFlippedCard) {
-                card[5].color = al_map_rgb(255, 0, 0);
                 card[5].cardFlipped = true;
             }
             if (event.mouse.button = 6 && mouseX >= card[6].x1 && mouseX <= card[6].x2 && mouseY >= card[6].y1 && mouseY <= card[6].y2 && !hasFlippedCard) {
-                card[6].color = al_map_rgb(0, 255, 0);
                 card[6].cardFlipped = true;
             }
             if (event.mouse.button = 7 && mouseX >= card[7].x1 && mouseX <= card[7].x2 && mouseY >= card[7].y1 && mouseY <= card[7].y2 && !hasFlippedCard) {
-                card[7].color = al_map_rgb(0, 0, 0);
                 card[7].cardFlipped = true;
             }
         }

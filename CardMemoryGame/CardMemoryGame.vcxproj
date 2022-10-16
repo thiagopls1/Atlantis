@@ -150,9 +150,10 @@
     <ClCompile Include="registerEventsSource.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="deck.h" />
     <ClInclude Include="destroyGame.h" />
     <ClInclude Include="drawCards.h" />
-    <ClInclude Include="cardInfo.h" />
+    <ClInclude Include="cardPos.h" />
     <ClInclude Include="mapCards.h" />
     <ClInclude Include="registerEventsSource.h" />
   </ItemGroup>

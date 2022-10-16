@@ -1,6 +1,6 @@
 #ifndef DRAW_CARDS
 #define DRAW_CARDS
-#include "cardInfo.h"
+#include "cardPos.h"
 
-void drawCards(cardInfo card[8]);
+void drawCards(cardPos card[8]);
 #endif

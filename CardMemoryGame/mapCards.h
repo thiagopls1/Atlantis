@@ -1,6 +1,6 @@
 #ifndef MAP_CARDS
 #define MAP_CARDS
-#include "cardInfo.h"
+#include "cardPos.h"
 
-void mapCards(cardInfo card[8]);
+void mapCards(cardPos card[8]);
 #endif
