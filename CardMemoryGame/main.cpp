@@ -4,27 +4,40 @@
 #include <allegro5/allegro_font.h>
 #include <allegro5/allegro_ttf.h>
 #include <queue>
-#include <string.h>
+
 #include "destroyGame.h"
 #include "registerEventsSource.h"
 #include "drawCards.h"
+#include "mapCards.h"
+#include "checkFlippedCards.h"
+
 #include "cardPos.h"
 #include "deck.h"
-#include "mapCards.h"
 
-
+#include "stdlib.h"
+#include "time.h"
+#include <string.h>
+#include <stdio.h>
 
 int main() {
+    srand(time(NULL));
     //-------------------------------VARIÁVEIS LOCAIS---------------------------------//
     int mouseX = 0, mouseY = 0;
     int dialogStep = 0;
     int firstCard = NULL, secondCard = NULL;
     int movement = 0, score = 0;
     char dialogText[1000] = { "Hello World" };
+    char scoreText[12] = { "Pontos: " };
+    char movementsText[15] = { "Movimentos: " };
     bool running = true;
     bool hasFlippedCard = false;
     //-------------------------------PREENCHENDO O STRUCT---------------------------------//
     cardPos card[8]{};
+    deck cardData[4];
+    cardData[0] = { 0, al_map_rgb(250, 200, 250) };
+    cardData[1] = { 1, al_map_rgb(250, 250, 0) };
+    cardData[2] = { 2, al_map_rgb(0, 250, 250) };
+    cardData[3] = { 3, al_map_rgb(75, 75, 75) };
     mapCards(card);
     //-------------------------------DISPLAY---------------------------------//
     al_init(); //Inicia o Allegro e os seus Addons
@@ -56,9 +69,11 @@ int main() {
         if (event.type == ALLEGRO_EVENT_TIMER) {
             al_clear_to_color(al_map_rgb(0, 150, 220));
             al_draw_bitmap(bitmap, 0, 0, 0);
-            drawCards(card);
+            drawCards(card, cardData);
             al_draw_rectangle(320, 700, 1250, 600, al_map_rgb(255, 255, 255), 3);
             al_draw_text(font, al_map_rgb(255, 255, 255), 330, 600, 0, dialogText);
+            al_draw_text(font, al_map_rgb(255, 255, 255), 800, 10, 0, movementsText);
+            al_draw_text(font, al_map_rgb(255, 255, 255), 1000, 10, 0, scoreText);
             al_draw_circle(mouseX, mouseY, 5, al_map_rgb(255, 255, 255), 2);
             al_flip_display();
         }
@@ -95,30 +110,120 @@ int main() {
                 }
             }
             // Carta clicada
-            if (event.mouse.button = 1 && mouseX >= card[0].x1 && mouseX <= card[0].x2 && mouseY >= card[0].y1 && mouseY <= card[0].y2 && !hasFlippedCard) {
+            if (event.mouse.button = 1 && mouseX >= card[0].x1 && mouseX <= card[0].x2 && mouseY >= card[0].y1 && mouseY <= card[0].y2) {
                 card[0].cardFlipped = true;
+                hasFlippedCard = true;
+                if (firstCard == NULL) {
+                    firstCard = card[0].cardId;
+                }
+                else if (secondCard == NULL) {
+                    secondCard = card[0].cardId;
+                }
+                if (hasFlippedCard) {
+                    score += checkFlippedCards(firstCard, secondCard);
+                    movement++;
+                }
             }
-            if (event.mouse.button = 1 && mouseX >= card[1].x1 && mouseX <= card[1].x2 && mouseY >= card[1].y1 && mouseY <= card[1].y2 && !hasFlippedCard) {
+            if (event.mouse.button = 1 && mouseX >= card[1].x1 && mouseX <= card[1].x2 && mouseY >= card[1].y1 && mouseY <= card[1].y2) {
                 card[1].cardFlipped = true;
+                hasFlippedCard = true;
+                if (firstCard == NULL) {
+                    firstCard = card[1].cardId;
+                }
+                else if (secondCard == NULL) {
+                    secondCard = card[1].cardId;
+                }
+                if (hasFlippedCard) {
+                    score += checkFlippedCards(firstCard, secondCard);
+                    movement++;
+                }
             }
-            if (event.mouse.button = 2 && mouseX >= card[2].x1 && mouseX <= card[2].x2 && mouseY >= card[2].y1 && mouseY <= card[2].y2 && !hasFlippedCard) {
+            if (event.mouse.button = 1 && mouseX >= card[2].x1 && mouseX <= card[2].x2 && mouseY >= card[2].y1 && mouseY <= card[2].y2) {
                 card[2].cardFlipped = true;
+                hasFlippedCard = true;
+                if (firstCard == NULL) {
+                    firstCard = card[2].cardId;
+                }
+                else if (secondCard == NULL) {
+                    secondCard = card[2].cardId;
+                }
+                if (hasFlippedCard) {
+                    score += checkFlippedCards(firstCard, secondCard);
+                    movement++;
+                }
             }
-            if (event.mouse.button = 3 && mouseX >= card[3].x1 && mouseX <= card[3].x2 && mouseY >= card[3].y1 && mouseY <= card[3].y2 && !hasFlippedCard) {
+            if (event.mouse.button = 1 && mouseX >= card[3].x1 && mouseX <= card[3].x2 && mouseY >= card[3].y1 && mouseY <= card[3].y2) {
                 card[3].cardFlipped = true;
+                hasFlippedCard = true;
+                if (firstCard == NULL) {
+                    firstCard = card[3].cardId;
+                }
+                else if (secondCard == NULL) {
+                    secondCard = card[3].cardId;
+                }
+                if (hasFlippedCard) {
+                    score += checkFlippedCards(firstCard, secondCard);
+                    movement++;
+                }
             }
-            if (event.mouse.button = 4 && mouseX >= card[4].x1 && mouseX <= card[4].x2 && mouseY >= card[4].y1 && mouseY <= card[4].y2 && !hasFlippedCard) {
+            if (event.mouse.button = 1 && mouseX >= card[4].x1 && mouseX <= card[4].x2 && mouseY >= card[4].y1 && mouseY <= card[4].y2) {
                 card[4].cardFlipped = true;
+                hasFlippedCard = true;
+                if (firstCard == NULL) {
+                    firstCard = card[4].cardId;
+                }
+                else if (secondCard == NULL) {
+                    secondCard = card[4].cardId;
+                }
+                if (hasFlippedCard) {
+                    score += checkFlippedCards(firstCard, secondCard);
+                    movement++;
+                }
             }
-            if (event.mouse.button = 5 && mouseX >= card[5].x1 && mouseX <= card[5].x2 && mouseY >= card[5].y1 && mouseY <= card[5].y2 && !hasFlippedCard) {
+            if (event.mouse.button = 1 && mouseX >= card[5].x1 && mouseX <= card[5].x2 && mouseY >= card[5].y1 && mouseY <= card[5].y2) {
                 card[5].cardFlipped = true;
+                hasFlippedCard = true;
+                if (firstCard == NULL) {
+                    firstCard = card[5].cardId;
+                }
+                else if (secondCard == NULL) {
+                    secondCard = card[5].cardId;
+                }
+                if (hasFlippedCard) {
+                    score += checkFlippedCards(firstCard, secondCard);
+                    movement++;
+                }
             }
-            if (event.mouse.button = 6 && mouseX >= card[6].x1 && mouseX <= card[6].x2 && mouseY >= card[6].y1 && mouseY <= card[6].y2 && !hasFlippedCard) {
+            if (event.mouse.button = 1 && mouseX >= card[6].x1 && mouseX <= card[6].x2 && mouseY >= card[6].y1 && mouseY <= card[6].y2) {
                 card[6].cardFlipped = true;
+                hasFlippedCard = true;
+                if (firstCard == NULL) {
+                    firstCard = card[6].cardId;
+                }
+                else if (secondCard == NULL) {
+                    secondCard = card[6].cardId;
+                }
+                if (hasFlippedCard) {
+                    score += checkFlippedCards(firstCard, secondCard);
+                    movement++;
+                }
             }
-            if (event.mouse.button = 7 && mouseX >= card[7].x1 && mouseX <= card[7].x2 && mouseY >= card[7].y1 && mouseY <= card[7].y2 && !hasFlippedCard) {
+            if (event.mouse.button = 1 && mouseX >= card[7].x1 && mouseX <= card[7].x2 && mouseY >= card[7].y1 && mouseY <= card[7].y2) {
                 card[7].cardFlipped = true;
+                hasFlippedCard = true;
+                if (firstCard == NULL) {
+                    firstCard = card[7].cardId;
+                }
+                else if (secondCard == NULL) {
+                    secondCard = card[7].cardId;
+                }
+                if (hasFlippedCard) {
+                    score += checkFlippedCards(firstCard, secondCard);
+                    movement++;
+                }
             }
+            printf("Score: %d\n", score);
+            printf("Movement: %d\n", movement);
         }
 
         if (event.type == ALLEGRO_EVENT_DISPLAY_CLOSE){

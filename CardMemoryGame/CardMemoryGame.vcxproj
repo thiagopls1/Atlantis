@@ -143,6 +143,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="checkFlippedCards.cpp" />
     <ClCompile Include="destroyGame.cpp" />
     <ClCompile Include="drawCards.cpp" />
     <ClCompile Include="main.cpp" />
@@ -150,6 +151,7 @@
     <ClCompile Include="registerEventsSource.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="checkFlippedCards.h" />
     <ClInclude Include="deck.h" />
     <ClInclude Include="destroyGame.h" />
     <ClInclude Include="drawCards.h" />
