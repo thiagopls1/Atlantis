@@ -3,6 +3,7 @@
 
 struct cardInfo{
 	int cardId;
+	int cardPos;
 	bool cardFlipped;
 	ALLEGRO_COLOR color;
 	int x1, y1, x2, y2;

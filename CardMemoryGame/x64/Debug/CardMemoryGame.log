@@ -1,3 +1,6 @@
 ﻿  main.cpp
 C:\Users\Thiago\source\repos\Atlantis\CardMemoryGame\cardInfo.h(10,9): warning C4091: '': ignored on left of 'cardInfo' when no variable is declared
+  mapCards.cpp
+C:\Users\Thiago\source\repos\Atlantis\CardMemoryGame\cardInfo.h(10,9): warning C4091: '': ignored on left of 'cardInfo' when no variable is declared
+  Generating Code...
   CardMemoryGame.vcxproj -> C:\Users\Thiago\source\repos\Atlantis\x64\Debug\CardMemoryGame.exe
