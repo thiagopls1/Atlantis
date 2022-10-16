@@ -223,7 +223,7 @@ int main() {
                 }
             }
             printf("Score: %d\n", score);
-            printf("Movement: %d\n", movement);
+            printf("Movement: %d\n\n", movement);
         }
 
         if (event.type == ALLEGRO_EVENT_DISPLAY_CLOSE){
