@@ -24,13 +24,15 @@ int main() {
     //-------------------------------VARIÁVEIS LOCAIS---------------------------------//
     int mouseX = 0, mouseY = 0;
     int dialogStep = 0;
-    int firstCard = NULL, secondCard = NULL;
+
+    int firstCard = NULL;
+    bool hasFlippedCard = false;
     int movement = 0, score = 0;
+
     char dialogText[1000] = { "Hello World" };
     char scoreText[12] = { "Pontos: " };
     char movementsText[15] = { "Movimentos: " };
     bool running = true;
-    bool hasFlippedCard = false;
     //-------------------------------PREENCHENDO O STRUCT---------------------------------//
     cardPos card[8]{};
     deck cardData[4];
@@ -109,126 +111,44 @@ int main() {
                 break;
                 }
             }
+
             // Carta clicada
-            if (event.mouse.button = 1 && mouseX >= card[0].x1 && mouseX <= card[0].x2 && mouseY >= card[0].y1 && mouseY <= card[0].y2) {
-                card[0].cardFlipped = true;
-                hasFlippedCard = true;
-                if (firstCard == NULL) {
-                    firstCard = card[0].cardId;
+            for (int i = 0; i < 8; i++) {
+                
+                if (mouseX >= card[i].x1 && mouseX <= card[i].x2 && mouseY >= card[i].y1 && mouseY <= card[i].y2 && !card[i].locked) {
+                    
+                    if (!hasFlippedCard) {
+                        firstCard = i;
+                        card[i].flipped = true;
+                        hasFlippedCard = true;
+                        card[i].locked = true;
+                    }
+                    else {
+                        if (card[firstCard].id == card[i].id) {
+                            score++;
+                            card[i].flipped = true;
+                            card[i].locked = true;
+                            
+                        }
+                        else {
+                            card[firstCard].flipped = false;
+                            card[firstCard].locked = false;
+                            
+                        }
+                        hasFlippedCard = false;
+                        movement++;
+                        firstCard = NULL;
+                    }                    
+
                 }
-                else if (secondCard == NULL) {
-                    secondCard = card[0].cardId;
-                }
-                if (hasFlippedCard) {
-                    score += checkFlippedCards(firstCard, secondCard);
-                    movement++;
-                }
+                
             }
-            if (event.mouse.button = 1 && mouseX >= card[1].x1 && mouseX <= card[1].x2 && mouseY >= card[1].y1 && mouseY <= card[1].y2) {
-                card[1].cardFlipped = true;
-                hasFlippedCard = true;
-                if (firstCard == NULL) {
-                    firstCard = card[1].cardId;
-                }
-                else if (secondCard == NULL) {
-                    secondCard = card[1].cardId;
-                }
-                if (hasFlippedCard) {
-                    score += checkFlippedCards(firstCard, secondCard);
-                    movement++;
-                }
-            }
-            if (event.mouse.button = 1 && mouseX >= card[2].x1 && mouseX <= card[2].x2 && mouseY >= card[2].y1 && mouseY <= card[2].y2) {
-                card[2].cardFlipped = true;
-                hasFlippedCard = true;
-                if (firstCard == NULL) {
-                    firstCard = card[2].cardId;
-                }
-                else if (secondCard == NULL) {
-                    secondCard = card[2].cardId;
-                }
-                if (hasFlippedCard) {
-                    score += checkFlippedCards(firstCard, secondCard);
-                    movement++;
-                }
-            }
-            if (event.mouse.button = 1 && mouseX >= card[3].x1 && mouseX <= card[3].x2 && mouseY >= card[3].y1 && mouseY <= card[3].y2) {
-                card[3].cardFlipped = true;
-                hasFlippedCard = true;
-                if (firstCard == NULL) {
-                    firstCard = card[3].cardId;
-                }
-                else if (secondCard == NULL) {
-                    secondCard = card[3].cardId;
-                }
-                if (hasFlippedCard) {
-                    score += checkFlippedCards(firstCard, secondCard);
-                    movement++;
-                }
-            }
-            if (event.mouse.button = 1 && mouseX >= card[4].x1 && mouseX <= card[4].x2 && mouseY >= card[4].y1 && mouseY <= card[4].y2) {
-                card[4].cardFlipped = true;
-                hasFlippedCard = true;
-                if (firstCard == NULL) {
-                    firstCard = card[4].cardId;
-                }
-                else if (secondCard == NULL) {
-                    secondCard = card[4].cardId;
-                }
-                if (hasFlippedCard) {
-                    score += checkFlippedCards(firstCard, secondCard);
-                    movement++;
-                }
-            }
-            if (event.mouse.button = 1 && mouseX >= card[5].x1 && mouseX <= card[5].x2 && mouseY >= card[5].y1 && mouseY <= card[5].y2) {
-                card[5].cardFlipped = true;
-                hasFlippedCard = true;
-                if (firstCard == NULL) {
-                    firstCard = card[5].cardId;
-                }
-                else if (secondCard == NULL) {
-                    secondCard = card[5].cardId;
-                }
-                if (hasFlippedCard) {
-                    score += checkFlippedCards(firstCard, secondCard);
-                    movement++;
-                }
-            }
-            if (event.mouse.button = 1 && mouseX >= card[6].x1 && mouseX <= card[6].x2 && mouseY >= card[6].y1 && mouseY <= card[6].y2) {
-                card[6].cardFlipped = true;
-                hasFlippedCard = true;
-                if (firstCard == NULL) {
-                    firstCard = card[6].cardId;
-                }
-                else if (secondCard == NULL) {
-                    secondCard = card[6].cardId;
-                }
-                if (hasFlippedCard) {
-                    score += checkFlippedCards(firstCard, secondCard);
-                    movement++;
-                }
-            }
-            if (event.mouse.button = 1 && mouseX >= card[7].x1 && mouseX <= card[7].x2 && mouseY >= card[7].y1 && mouseY <= card[7].y2) {
-                card[7].cardFlipped = true;
-                hasFlippedCard = true;
-                if (firstCard == NULL) {
-                    firstCard = card[7].cardId;
-                }
-                else if (secondCard == NULL) {
-                    secondCard = card[7].cardId;
-                }
-                if (hasFlippedCard) {
-                    score += checkFlippedCards(firstCard, secondCard);
-                    movement++;
-                }
-            }
+
             printf("Score: %d\n", score);
             printf("Movement: %d\n\n", movement);
         }
 
-        if (event.type == ALLEGRO_EVENT_DISPLAY_CLOSE){
-            running = false;
-        }
+        if (event.type == ALLEGRO_EVENT_DISPLAY_CLOSE){ running = false; }
     }
 
     destroyGame(display, timer, bitmap, font);

@@ -4,7 +4,7 @@ int checkFlippedCards(int firstCard, int secondCard){
 	if (firstCard == secondCard) {
 		return 1;
 	}
-	else {
+	if(firstCard != secondCard) {
 		return 0;
 	}
 }
