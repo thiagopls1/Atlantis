@@ -2,7 +2,6 @@
 #include <allegro5/allegro.h>
 
 struct cardPos{
-	int position;
 	int id;
 	bool flipped;
 	bool locked;

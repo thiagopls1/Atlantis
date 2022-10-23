@@ -1,4 +1,10 @@
-﻿  main.cpp
-C:\Users\Thiago\source\repos\Atlantis\CardMemoryGame\cardPos.h(11,8): warning C4091: '': ignored on left of 'cardPos' when no variable is declared
+﻿  drawCards.cpp
+C:\Users\Thiago\source\repos\Atlantis\CardMemoryGame\cardPos.h(10,8): warning C4091: '': ignored on left of 'cardPos' when no variable is declared
 C:\Users\Thiago\source\repos\Atlantis\CardMemoryGame\deck.h(8,5): warning C4091: '': ignored on left of 'deck' when no variable is declared
+  main.cpp
+C:\Users\Thiago\source\repos\Atlantis\CardMemoryGame\cardPos.h(10,8): warning C4091: '': ignored on left of 'cardPos' when no variable is declared
+C:\Users\Thiago\source\repos\Atlantis\CardMemoryGame\deck.h(8,5): warning C4091: '': ignored on left of 'deck' when no variable is declared
+  mapCards.cpp
+C:\Users\Thiago\source\repos\Atlantis\CardMemoryGame\cardPos.h(10,8): warning C4091: '': ignored on left of 'cardPos' when no variable is declared
+  Generating Code...
   CardMemoryGame.vcxproj -> C:\Users\Thiago\source\repos\Atlantis\x64\Debug\CardMemoryGame.exe
