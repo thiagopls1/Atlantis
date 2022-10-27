@@ -78,10 +78,8 @@ int main() {
             drawCards(card, cardData);
             al_draw_rectangle(320, 700, 1250, 600, al_map_rgb(255, 255, 255), 3);
             al_draw_text(font, al_map_rgb(255, 255, 255), 330, 600, 0, dialogText);
-            al_draw_text(font, al_map_rgb(255, 255, 255), 800, 10, 0, "Movimentos: ");
-            al_draw_textf(font, al_map_rgb(255, 255, 255), 940, 10, 0, "%d", movement);
-            al_draw_text(font, al_map_rgb(255, 255, 255), 1000, 10, 0, "Pontos: ");
-            al_draw_textf(font, al_map_rgb(255, 255, 255), 1090, 10, 0, "%d", score);
+            al_draw_textf(font, al_map_rgb(255, 255, 255), 800, 10, 0, "Movimentos: %d", movement);
+            al_draw_textf(font, al_map_rgb(255, 255, 255), 1000, 10, 0, "Pontos: %d", score);
             if (score >= 4) {
                 al_draw_filled_rectangle(0, 0, 1280, 720, al_map_rgba(0, 0, 0, 155));
                 al_draw_text(biggerFont, al_map_rgb(255, 255, 255), displayX/2 - 220, displayY/2 - 50, 0, winText);
@@ -144,9 +142,6 @@ int main() {
                             score++;
                             card[i].flipped = true;
                             card[i].locked = true;
-                            //if (score >= 4) {
-                            //    strcpy_s(winText, "Parabens, voce venceu!");
-                            //}
                         }
                         else {
                             card[firstCard].flipped = false;
@@ -160,9 +155,6 @@ int main() {
                 }
                 
             }
-
-            printf("Score: %d\n", score);
-            printf("Movement: %d\n\n", movement);
         }
 
         if (event.type == ALLEGRO_EVENT_DISPLAY_CLOSE){ running = false; }
