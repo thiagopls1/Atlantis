@@ -34,6 +34,7 @@ int main() {
     char scoreText[3];
     char movementsText[15] = { "Movimentos: " };
     bool running = true;
+    bool playing = true;
     //-------------------------------PREENCHENDO O STRUCT---------------------------------//
     cardPos card[8]{};
     deck cardData[4];
@@ -87,6 +88,7 @@ int main() {
             al_draw_text(font, al_map_rgb(255, 255, 255), 1000, 10, 0, "Pontos: ");
             al_draw_textf(font, al_map_rgb(255, 255, 255), 1090, 10, 0, "%d", score);
             if (score >= 4) {
+                playing = false;
                 al_draw_filled_rectangle(0, 0, 1280, 720, al_map_rgba(0, 0, 0, 155));
                 al_draw_text(biggerFont, al_map_rgb(255, 255, 255), displayX/2 - 220, displayY/2 - 50, 0, winText);
                 al_draw_text(font, al_map_rgb(255, 255, 255), displayX / 2 - 235, displayY / 2 + 30, 0, "Jogar Novamente"); 
@@ -111,8 +113,6 @@ int main() {
         // DOWN: Clicou no botão
         // UP: Soltou o botão
         if (event.type == ALLEGRO_EVENT_MOUSE_BUTTON_DOWN){
-
-            //
 
 
             // Diálogo de texto
@@ -139,8 +139,10 @@ int main() {
 
             // Carta clicada
             for (int i = 0; i < 8; i++) {
-                if (mouseX >= card[i].x1 && mouseX <= card[i].x2 && mouseY >= card[i].y1 && mouseY <= card[i].y2 && !card[i].locked) {
-                    
+                if (score == 0 && movement == 0) {
+                    card[i].locked = false;
+                }
+                if (mouseX >= card[i].x1 && mouseX <= card[i].x2 && mouseY >= card[i].y1 && mouseY <= card[i].y2 && !card[i].locked && playing) {
                     if (!hasFlippedCard) {
                         firstCard = i;
                         card[i].flipped = true;
@@ -152,9 +154,6 @@ int main() {
                             score++;
                             card[i].flipped = true;
                             card[i].locked = true;
-                            //if (score >= 4) {
-                            //    strcpy_s(winText, "Parabens, voce venceu!");
-                            //}
                         }
                         else {
                             card[firstCard].flipped = false;
@@ -164,21 +163,17 @@ int main() {
                         movement++;
                         firstCard = NULL;
                     }                    
-
                 }
-                if (mouseX >= displayX / 2 - 250 && mouseY >= displayY / 2 + 20 && mouseX <= displayX / 2 - 35 && mouseY <= displayY / 2 + 85 && score >= 4) { // DÚVIDA SEVERA IMPORTANTE
-
+            }
+                if (mouseX >= displayX / 2 - 250 && mouseY >= displayY / 2 + 20 && mouseX <= displayX / 2 - 35 && mouseY <= displayY / 2 + 85 && !playing) { // DÚVIDA SEVERA IMPORTANTE
                     mapCards(card);
                     movement = 0;
-                    score = 0;                    
-
+                    score = 0;
+                    playing = true;
                 }
-                
-            }
-
         }
 
-        if (event.type == ALLEGRO_EVENT_DISPLAY_CLOSE){ running = false; }
+        if (event.type == ALLEGRO_EVENT_DISPLAY_CLOSE) { running = false; }
     }
 
     destroyGame(display, timer, bitmap, font);

@@ -34,4 +34,5 @@ void mapCards(cardPos card[8]){
         x += 200;
         printf("carta[%d]: %d\n", i, card[i].id);
     }
+    printf("\n");
 }
