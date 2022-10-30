@@ -85,8 +85,8 @@ int main() {
             if (score >= 4) {
                 al_draw_filled_rectangle(0, 0, 1280, 720, al_map_rgba(0, 0, 0, 155));
                 al_draw_text(biggerFont, al_map_rgb(255, 255, 255), displayX/2 - 220, displayY/2 - 50, 0, winText);
-                al_draw_text(font, al_map_rgb(255, 255, 255), displayX / 2 - 235, displayY / 2 + 30, 0, "Jogar Novamente");
-                al_draw_rectangle(displayX / 2 - 250, displayY / 2 + 20, displayX / 2 - 35, displayY /2 + 85, al_map_rgb(255, 255, 255), 3);
+                al_draw_text(font, al_map_rgb(255, 255, 255), displayX / 2 - 235, displayY / 2 + 30, 0, "Jogar Novamente"); 
+                al_draw_rectangle(displayX / 2 - 250, displayY / 2 + 20, displayX / 2 - 35, displayY /2 + 85, al_map_rgb(255, 255, 255), 3); //Retângulo do "Jogar Novamente"
                 al_draw_text(font, al_map_rgb(255, 255, 255), displayX / 2 + 200, displayY / 2 + 30, 0, "Sair");
                 al_draw_rectangle(displayX / 2 + 150, displayY / 2 + 20, displayX / 2 + 285, displayY / 2 + 85, al_map_rgb(255, 255, 255), 3);
                 for (int i = 0; i < 8; i++) {
@@ -107,8 +107,12 @@ int main() {
         // DOWN: Clicou no botão
         // UP: Soltou o botão
         if (event.type == ALLEGRO_EVENT_MOUSE_BUTTON_DOWN){
+
+            //
+
+
             // Diálogo de texto
-            if (event.mouse.button = 1 && mouseX >= 320 && mouseX <= 1250 && mouseY <= 700 && mouseY >= 600) {
+            if (mouseX >= 320 && mouseX <= 1250 && mouseY <= 700 && mouseY >= 600) {
                 switch (dialogStep) {
                 case 0:
                     strcpy_s(dialogText, "Teste de Texto 1");
@@ -158,11 +162,16 @@ int main() {
                     }                    
 
                 }
+                if (mouseX >= displayX / 2 - 250 && mouseY >= displayY / 2 + 20 && mouseX <= displayX / 2 - 35 && mouseY <= displayY / 2 + 85 && score >= 4) { // DÚVIDA SEVERA IMPORTANTE
+
+                    mapCards(card);
+                    movement = 0;
+                    score = 0;                    
+
+                }
                 
             }
 
-            printf("Score: %d\n", score);
-            printf("Movement: %d\n\n", movement);
         }
 
         if (event.type == ALLEGRO_EVENT_DISPLAY_CLOSE){ running = false; }
