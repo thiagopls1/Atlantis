@@ -1,3 +1,5 @@
+//-------------------------------INCLUDES---------------------------------//
+
 #include <allegro5\allegro5.h>
 #include <allegro5/allegro_image.h>
 #include <allegro5/allegro_primitives.h>
@@ -21,7 +23,9 @@
 
 int main() {
     srand(time(NULL));
+
     //-------------------------------VARIÁVEIS LOCAIS---------------------------------//
+
     int mouseX = 0, mouseY = 0;
     int dialogStep = 0;
 
@@ -35,7 +39,9 @@ int main() {
     char movementsText[15] = { "Movimentos: " };
     bool running = true;
     bool playing = true;
+
     //-------------------------------PREENCHENDO O STRUCT---------------------------------//
+
     cardPos card[8]{};
     deck cardData[4];
     cardData[0] = { 0, al_map_rgb(250, 200, 250) };
@@ -43,17 +49,22 @@ int main() {
     cardData[2] = { 2, al_map_rgb(0, 250, 250) };
     cardData[3] = { 3, al_map_rgb(75, 75, 75) };
     mapCards(card);
+
     //-------------------------------DISPLAY---------------------------------//
+
     al_init(); //Inicia o Allegro e os seus Addons
     al_init_image_addon();
     al_init_ttf_addon();
     al_init_primitives_addon();
 
-    // Variáveis do Allegro
+    //-------------------------------VARIÁVEIS DO ALLEGRO---------------------------------//
+
     ALLEGRO_DISPLAY* display = al_create_display(1280, 720); //Dimensões do Display
     ALLEGRO_TIMER* timer = al_create_timer(1.0/60);
     ALLEGRO_BITMAP* bitmap;
-    ALLEGRO_BITMAP* cat;
+    ALLEGRO_BITMAP* cat1; //VARIÁVEL DOS GATOS
+    ALLEGRO_BITMAP* cat2;
+    ALLEGRO_BITMAP* cat3;
     ALLEGRO_FONT* font = al_load_ttf_font("alterebro-pixel.ttf", 40, 0);
     ALLEGRO_FONT* biggerFont = al_load_ttf_font("alterebro-pixel.ttf", 80, 0);
     ALLEGRO_EVENT_QUEUE* queue = al_create_event_queue(); //Cria uma fila de eventos
@@ -66,7 +77,10 @@ int main() {
     al_hide_mouse_cursor(display);
     al_set_window_title(display, "Memory Game");
     bitmap = al_load_bitmap("tile.png");
-    cat = al_load_bitmap("cat1_resized.png");
+    cat1 = al_load_bitmap("cat1r.png");
+    cat2 = al_load_bitmap("cat2r.png");
+    cat3 = al_load_bitmap("cat3r.png");
+
     assert(display != NULL);
     al_start_timer(timer);
 
@@ -78,8 +92,11 @@ int main() {
         if (event.type == ALLEGRO_EVENT_TIMER) {
             al_clear_to_color(al_map_rgb(0, 150, 220));
             al_draw_bitmap(bitmap, 0, 0, 0); //DESENHA O TILE (BACKGROUND)
-            al_draw_bitmap(cat, 0, 4, 0); //DESENHA O GATO
-
+            al_draw_bitmap(cat1, 40, 418, 0); //DESENHA O GATO 1
+           // al_draw_bitmap(cat2, 40, 460, 0); //DESENHA O GATO 2
+           // al_draw_bitmap(cat3, 40, 360, 0); //DESENHA O GATO 3
+            
+            
             drawCards(card, cardData);
             al_draw_rectangle(320, 700, 1250, 600, al_map_rgb(255, 255, 255), 3);
             al_draw_text(font, al_map_rgb(255, 255, 255), 330, 600, 0, dialogText);
@@ -102,24 +119,25 @@ int main() {
             al_draw_circle(mouseX, mouseY, 5, al_map_rgb(255, 255, 255), 2);
             al_flip_display();
         }
-       
-        // Localização do mouse
+
+        //-------------------------------LOCALIZAÇÃO DO MOUSE---------------------------------//
+
         if (event.type == ALLEGRO_EVENT_MOUSE_AXES) {
             mouseX = event.mouse.x;
             mouseY = event.mouse.y;
         }
 
-        // Exemplo de ação ao clicar
+        // Exemplo de ação ao clicar:
         // DOWN: Clicou no botão
         // UP: Soltou o botão
-        if (event.type == ALLEGRO_EVENT_MOUSE_BUTTON_DOWN){
 
+        if (event.type == ALLEGRO_EVENT_MOUSE_BUTTON_DOWN){
 
             //-------------------------------DIÁLOGO DE TEXTO---------------------------------//
 
             if (mouseX >= 320 && mouseX <= 1250 && mouseY <= 700 && mouseY >= 600) {
                 switch (dialogStep) {
-                case 0:
+                case 0: 
                     strcpy_s(dialogText, "Neste jogo da memoria voce aprendera Ingles por assimilacao");
                     dialogStep++;
                 break;
@@ -133,12 +151,13 @@ int main() {
                 break;
                 case 3:
                     strcpy_s(dialogText, "Teste de Texto 4");
+                    
                     dialogStep = 0;
                 break;
                 }
             }
 
-            // Carta clicada
+            //-------------------------------CARTA CLICADA---------------------------------//
             for (int i = 0; i < 8; i++) {
                 if (score == 0 && movement == 0) {
                     card[i].locked = false;
