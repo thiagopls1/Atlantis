@@ -29,7 +29,7 @@ int main() {
     bool hasFlippedCard = false;
     int movement = 0, score = 0;
 
-    char dialogText[1000] = { "Hello World" };
+    char dialogText[1000] = { "Ola seja bem vindo(a) ao nosso jogo da memoria!!! (quebra de linha).  " }; // MENSAGEM DE BOAS VINDAS (Precisa arrumar a digitação e colocar a quebra de linha)
     char winText[1000] = { "Parabens, voce ganhou!" };
     char scoreText[3];
     char movementsText[15] = { "Movimentos: " };
@@ -115,11 +115,12 @@ int main() {
         if (event.type == ALLEGRO_EVENT_MOUSE_BUTTON_DOWN){
 
 
-            // Diálogo de texto
+            //-------------------------------DIÁLOGO DE TEXTO---------------------------------//
+
             if (mouseX >= 320 && mouseX <= 1250 && mouseY <= 700 && mouseY >= 600) {
                 switch (dialogStep) {
                 case 0:
-                    strcpy_s(dialogText, "Teste de Texto 1");
+                    strcpy_s(dialogText, "Neste jogo da memoria voce aprendera Ingles por assimilacao");
                     dialogStep++;
                 break;
                 case 1:
