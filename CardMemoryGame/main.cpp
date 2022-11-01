@@ -42,7 +42,7 @@ int main() {
     int movement = 0, score = 0;
 
     char dialogText[1000] = {"Olá Seja bem vindo(a) ao nosso jogo da memória!!!."}; // MENSAGEM DE BOAS VINDAS (Precisa arrumar a digitação e colocar a quebra de linha)
-    char winText[1000] = { "Parabéns, voce ganhou!" };
+    char winText[1000] = { "Parabéns, você ganhou!" };
     char scoreText[3];
     char movementsText[15] = { "Movimentos: " };
     bool running = true;
