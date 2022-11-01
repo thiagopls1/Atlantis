@@ -94,24 +94,53 @@ int main() {
         al_wait_for_event(queue, &event);
        
         if (event.type == ALLEGRO_EVENT_TIMER) {
+
             al_clear_to_color(al_map_rgb(0, 150, 220));
+
             al_draw_bitmap(bitmap, 0, 0, 0); //DESENHA O TILE (BACKGROUND)
-            al_draw_bitmap(cat, catX, catY, 0); //DESENHA O GATO 1
+            al_draw_bitmap(cat, catX, catY, 0); //DESENHA O GATO
+
             drawCards(card, cardData);
-            al_draw_rectangle(320, 700, 1250, 600, al_map_rgb(255, 255, 255), 3);
+
+            al_draw_rectangle(320, 700, 1250, 600, al_map_rgb(255, 255, 255), 3); // Caixa de diálogo
             al_draw_text(font, al_map_rgb(255, 255, 255), 330, 600, 0, dialogText);
             al_draw_text(font, al_map_rgb(255, 255, 255), 800, 10, 0, "Movimentos: ");
             al_draw_textf(font, al_map_rgb(255, 255, 255), 940, 10, 0, "%d", movement);
             al_draw_text(font, al_map_rgb(255, 255, 255), 1000, 10, 0, "Pontos: ");
             al_draw_textf(font, al_map_rgb(255, 255, 255), 1090, 10, 0, "%d", score);
+
             if (score >= 4) {
                 playing = false;
                 al_draw_filled_rectangle(0, 0, 1280, 720, al_map_rgba(0, 0, 0, 155));
                 al_draw_text(biggerFont, al_map_rgb(255, 255, 255), displayX/2 - 220, displayY/2 - 50, 0, winText);
-                al_draw_text(font, al_map_rgb(255, 255, 255), displayX / 2 - 235, displayY / 2 + 30, 0, "Jogar Novamente"); 
-                al_draw_rectangle(displayX / 2 - 250, displayY / 2 + 20, displayX / 2 - 35, displayY /2 + 85, al_map_rgb(255, 255, 255), 3); //Retângulo do "Jogar Novamente"
-                al_draw_text(font, al_map_rgb(255, 255, 255), displayX / 2 + 200, displayY / 2 + 30, 0, "Sair");
-                al_draw_rectangle(displayX / 2 + 150, displayY / 2 + 20, displayX / 2 + 285, displayY / 2 + 85, al_map_rgb(255, 255, 255), 3);
+                al_draw_text(
+                    font, 
+                    al_map_rgb(255, 255, 255), 
+                    displayX / 2 - 235, 
+                    displayY / 2 + 30, 
+                    0, "Jogar Novamente"); 
+                al_draw_rectangle(
+                    displayX / 2 - 250, 
+                    displayY / 2 + 20, 
+                    displayX / 2 - 35, 
+                    displayY /2 + 85, 
+                    al_map_rgb(255, 255, 255), 
+                    3
+                ); //Retângulo do "Jogar Novamente"
+                al_draw_text(
+                    font, 
+                    al_map_rgb(255, 255, 255), 
+                    displayX / 2 + 200, 
+                    displayY / 2 + 30, 
+                    0, 
+                    "Sair"
+                );//Retângulo do "Sair"
+                al_draw_rectangle(
+                    displayX / 2 + 150, displayY / 2 + 20, 
+                    displayX / 2 + 285, displayY / 2 + 85, 
+                    al_map_rgb(255, 255, 255), 
+                    3
+                );
                 for (int i = 0; i < 8; i++) {
                     card[i].locked = true;
                 }
