@@ -1,5 +1,5 @@
 ﻿  main.cpp
 C:\Users\thiago.plsilva1\source\repos\Atlantis\CardMemoryGame\cardPos.h(10,8): warning C4091: '': ignorado à esquerda de 'cardPos' quando nenhuma variável é declarada
 C:\Users\thiago.plsilva1\source\repos\Atlantis\CardMemoryGame\deck.h(8,5): warning C4091: '': ignorado à esquerda de 'deck' quando nenhuma variável é declarada
-C:\Users\thiago.plsilva1\source\repos\Atlantis\CardMemoryGame\main.cpp(40,10): warning C4101: 'scoreText': variável local não referenciada
+C:\Users\thiago.plsilva1\source\repos\Atlantis\CardMemoryGame\main.cpp(44,10): warning C4101: 'scoreText': variável local não referenciada
   CardMemoryGame.vcxproj -> C:\Users\thiago.plsilva1\source\repos\Atlantis\x64\Debug\CardMemoryGame.exe

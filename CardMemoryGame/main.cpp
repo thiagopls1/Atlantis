@@ -20,23 +20,27 @@
 #include "time.h"
 #include <string.h>
 #include <stdio.h>
+#include <locale.h>
 
 int main() {
+    setlocale(LC_ALL, "Portuguese");
     srand(time(NULL));
 
-    //-------------------------------VARI¡VEIS LOCAIS---------------------------------//
+    printf("√°√©√≠√≥√∫");
+    //-------------------------------VARI√ÅVEIS LOCAIS---------------------------------//
 
     int mouseX = 0, mouseY = 0;
     int dialogStep = 0;
 
     int catX = 40, catY = 418;
 
+
     int firstCard = NULL;
     bool hasFlippedCard = false;
     int movement = 0, score = 0;
 
-    char dialogText[1000] = { "Ola seja bem vindo(a) ao nosso jogo da memoria!!! (quebra de linha).  " }; // MENSAGEM DE BOAS VINDAS (Precisa arrumar a digitaÁ„o e colocar a quebra de linha)
-    char winText[1000] = { "Parabens, voce ganhou!" };
+    char dialogText[1000] = {"Ol√° Seja bem vindo(a) ao nosso jogo da mem√≥ria!!!."}; // MENSAGEM DE BOAS VINDAS (Precisa arrumar a digita√ß√£o e colocar a quebra de linha)
+    char winText[1000] = { "Parab√©ns, voce ganhou!" };
     char scoreText[3];
     char movementsText[15] = { "Movimentos: " };
     bool running = true;
@@ -59,12 +63,12 @@ int main() {
     al_init_ttf_addon();
     al_init_primitives_addon();
 
-    //-------------------------------VARI¡VEIS DO ALLEGRO---------------------------------//
+    //-------------------------------VARI√ÅVEIS DO ALLEGRO---------------------------------//
 
-    ALLEGRO_DISPLAY* display = al_create_display(1280, 720); //Dimensıes do Display
+    ALLEGRO_DISPLAY* display = al_create_display(1280, 720); //Dimens√µes do Display
     ALLEGRO_TIMER* timer = al_create_timer(1.0/60);
     ALLEGRO_BITMAP* bitmap;
-    ALLEGRO_BITMAP* cat; //VARI¡VEL DOS GATOS
+    ALLEGRO_BITMAP* cat; //VARI√ÅVEL DOS GATOS
     ALLEGRO_FONT* font = al_load_ttf_font("alterebro-pixel.ttf", 40, 0);
     ALLEGRO_FONT* biggerFont = al_load_ttf_font("alterebro-pixel.ttf", 80, 0);
     ALLEGRO_EVENT_QUEUE* queue = al_create_event_queue(); //Cria uma fila de eventos
@@ -90,7 +94,7 @@ int main() {
         if (event.type == ALLEGRO_EVENT_TIMER) {
             al_clear_to_color(al_map_rgb(0, 150, 220));
             al_draw_bitmap(bitmap, 0, 0, 0); //DESENHA O TILE (BACKGROUND)
-            al_draw_bitmap(cat, 40, 418, 0); //DESENHA O GATO 1
+            al_draw_bitmap(cat, catX, catY, 0); //DESENHA O GATO 1
             drawCards(card, cardData);
             al_draw_rectangle(320, 700, 1250, 600, al_map_rgb(255, 255, 255), 3);
             al_draw_text(font, al_map_rgb(255, 255, 255), 330, 600, 0, dialogText);
@@ -103,7 +107,7 @@ int main() {
                 al_draw_filled_rectangle(0, 0, 1280, 720, al_map_rgba(0, 0, 0, 155));
                 al_draw_text(biggerFont, al_map_rgb(255, 255, 255), displayX/2 - 220, displayY/2 - 50, 0, winText);
                 al_draw_text(font, al_map_rgb(255, 255, 255), displayX / 2 - 235, displayY / 2 + 30, 0, "Jogar Novamente"); 
-                al_draw_rectangle(displayX / 2 - 250, displayY / 2 + 20, displayX / 2 - 35, displayY /2 + 85, al_map_rgb(255, 255, 255), 3); //Ret‚ngulo do "Jogar Novamente"
+                al_draw_rectangle(displayX / 2 - 250, displayY / 2 + 20, displayX / 2 - 35, displayY /2 + 85, al_map_rgb(255, 255, 255), 3); //Ret√¢ngulo do "Jogar Novamente"
                 al_draw_text(font, al_map_rgb(255, 255, 255), displayX / 2 + 200, displayY / 2 + 30, 0, "Sair");
                 al_draw_rectangle(displayX / 2 + 150, displayY / 2 + 20, displayX / 2 + 285, displayY / 2 + 85, al_map_rgb(255, 255, 255), 3);
                 for (int i = 0; i < 8; i++) {
@@ -114,35 +118,39 @@ int main() {
             al_flip_display();
         }
 
-        //-------------------------------LOCALIZA«√O DO MOUSE---------------------------------//
+        //-------------------------------LOCALIZA√á√ÉO DO MOUSE---------------------------------//
 
         if (event.type == ALLEGRO_EVENT_MOUSE_AXES) {
             mouseX = event.mouse.x;
             mouseY = event.mouse.y;
         }
 
-        // Exemplo de aÁ„o ao clicar:
-        // DOWN: Clicou no bot„o
-        // UP: Soltou o bot„o
+        // Exemplo de a√ß√£o ao clicar:
+        // DOWN: Clicou no bot√£o
+        // UP: Soltou o bot√£o
 
         if (event.type == ALLEGRO_EVENT_MOUSE_BUTTON_DOWN){
 
-            //-------------------------------DI¡LOGO DE TEXTO---------------------------------//
+            //-------------------------------DI√ÅLOGO DE TEXTO---------------------------------//
 
             if (mouseX >= 320 && mouseX <= 1250 && mouseY <= 700 && mouseY >= 600) {
                 switch (dialogStep) {
                 case 0: 
-                    strcpy_s(dialogText, "Neste jogo da memoria voce aprendera Ingles por assimilacao");
+                    strcpy_s(dialogText, "Neste jogo da mem√≥ria voce aprender√° Ingl√™s por assimila√ß√£o");
                     dialogStep++;
+                    cat = al_load_bitmap("cat1r.png");
                 break;
                 case 1:
                     strcpy_s(dialogText, "Teste de Texto 2");
                     dialogStep++;
                     cat = al_load_bitmap("cat2r.png");
+                    catX = 15, catY = 458;
                 break;
                 case 2:
                     strcpy_s(dialogText, "Teste de Texto 3");
                     dialogStep++;
+                    cat = al_load_bitmap("cat3r.png");
+                    catX = 40, catY = 418;
                 break;
                 case 3:
                     strcpy_s(dialogText, "Teste de Texto 4");
@@ -180,7 +188,7 @@ int main() {
                     }                    
                 }
             }
-                if (mouseX >= displayX / 2 - 250 && mouseY >= displayY / 2 + 20 && mouseX <= displayX / 2 - 35 && mouseY <= displayY / 2 + 85 && !playing) { // D⁄VIDA SEVERA IMPORTANTE
+                if (mouseX >= displayX / 2 - 250 && mouseY >= displayY / 2 + 20 && mouseX <= displayX / 2 - 35 && mouseY <= displayY / 2 + 85 && !playing) { // D√öVIDA SEVERA IMPORTANTE
                     mapCards(card);
                     movement = 0;
                     score = 0;
