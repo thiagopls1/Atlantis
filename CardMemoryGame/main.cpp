@@ -1,5 +1,5 @@
-//-------------------------------INCLUDES---------------------------------//
 
+// Bibliotecas do allegro
 #include <allegro5\allegro5.h>
 #include <allegro5/allegro_image.h>
 #include <allegro5/allegro_primitives.h>
@@ -7,15 +7,18 @@
 #include <allegro5/allegro_ttf.h>
 #include <queue>
 
+// Funções
 #include "destroyGame.h"
 #include "registerEventsSource.h"
 #include "drawCards.h"
 #include "mapCards.h"
 #include "checkFlippedCards.h"
 
+// Structs
 #include "cardPos.h"
 #include "deck.h"
 
+// Bibliotecas padrões do C
 #include "stdlib.h"
 #include "time.h"
 #include <string.h>
@@ -26,7 +29,6 @@ int main() {
     setlocale(LC_ALL, "Portuguese");
     srand(time(NULL));
 
-    printf("áéíóú");
     //-------------------------------VARIÁVEIS LOCAIS---------------------------------//
 
     int mouseX = 0, mouseY = 0;
@@ -154,7 +156,6 @@ int main() {
                 break;
                 case 3:
                     strcpy_s(dialogText, "Teste de Texto 4");
-                    
                     dialogStep = 0;
                 break;
                 }
