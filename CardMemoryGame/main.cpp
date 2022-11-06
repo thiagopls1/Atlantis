@@ -119,7 +119,8 @@ int main() {
                     al_map_rgb(255, 255, 255), 
                     displayX / 2 - 235, 
                     displayY / 2 + 30, 
-                    0, "Jogar Novamente"); 
+                    0, 
+                    "Jogar Novamente"); 
                 al_draw_rectangle(
                     displayX / 2 - 250, 
                     displayY / 2 + 20, 
