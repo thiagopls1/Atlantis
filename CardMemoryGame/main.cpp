@@ -25,6 +25,7 @@
 #include <stdio.h>
 #include <locale.h>
 
+
 int main() {
     setlocale(LC_ALL, "Portuguese");
     srand(time(NULL));
@@ -71,8 +72,8 @@ int main() {
     ALLEGRO_TIMER* timer = al_create_timer(1.0/60);
     ALLEGRO_BITMAP* bitmap;
     ALLEGRO_BITMAP* cat; //VARIÁVEL DOS GATOS
-    ALLEGRO_FONT* font = al_load_ttf_font("alterebro-pixel.ttf", 40, 0);
-    ALLEGRO_FONT* biggerFont = al_load_ttf_font("alterebro-pixel.ttf", 80, 0);
+    ALLEGRO_FONT* font = al_load_ttf_font("./assets/font/alterebro-pixel.ttf", 40, 0);
+    ALLEGRO_FONT* biggerFont = al_load_ttf_font("./assets/font/alterebro-pixel.ttf", 80, 0);
     ALLEGRO_EVENT_QUEUE* queue = al_create_event_queue(); //Cria uma fila de eventos
 
     int displayX = al_get_display_width(display);
@@ -82,8 +83,8 @@ int main() {
     registerEventsSource(queue, display, timer);
     al_hide_mouse_cursor(display);
     al_set_window_title(display, "Memory Game");
-    bitmap = al_load_bitmap("tile.png");
-    cat = al_load_bitmap("cat1r.png");
+    bitmap = al_load_bitmap("./assets/bg/tile.png");
+    cat = al_load_bitmap("./assets/cat/cat1r.png");
 
     assert(display != NULL);
     al_start_timer(timer);
@@ -169,18 +170,18 @@ int main() {
                 case 0: 
                     strcpy_s(dialogText, "Neste jogo da memória voce aprenderá Inglês por assimilação");
                     dialogStep++;
-                    cat = al_load_bitmap("cat1r.png");
+                    cat = al_load_bitmap("./assets/cat/cat1r.png");
                 break;
                 case 1:
                     strcpy_s(dialogText, "Teste de Texto 2");
                     dialogStep++;
-                    cat = al_load_bitmap("cat2r.png");
+                    cat = al_load_bitmap("./assets/cat/cat2r.png");
                     catX = 15, catY = 458;
                 break;
                 case 2:
                     strcpy_s(dialogText, "Teste de Texto 3");
                     dialogStep++;
-                    cat = al_load_bitmap("cat3r.png");
+                    cat = al_load_bitmap("./assets/cat/cat3r.png");
                     catX = 40, catY = 418;
                 break;
                 case 3:
@@ -218,12 +219,12 @@ int main() {
                     }                    
                 }
             }
-                if (mouseX >= displayX / 2 - 250 && mouseY >= displayY / 2 + 20 && mouseX <= displayX / 2 - 35 && mouseY <= displayY / 2 + 85 && !playing) { // DÚVIDA SEVERA IMPORTANTE
-                    mapCards(card);
-                    movement = 0;
-                    score = 0;
-                    playing = true;
-                }
+            if (mouseX >= displayX / 2 - 250 && mouseY >= displayY / 2 + 20 && mouseX <= displayX / 2 - 35 && mouseY <= displayY / 2 + 85 && !playing) { // DÚVIDA SEVERA IMPORTANTE
+                mapCards(card);
+                movement = 0;
+                score = 0;
+                playing = true;
+            }
         }
 
         if (event.type == ALLEGRO_EVENT_DISPLAY_CLOSE) { running = false; }
