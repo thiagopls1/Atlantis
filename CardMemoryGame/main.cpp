@@ -46,11 +46,18 @@ int main() {
     char winText[1000] = { "Parabéns, você ganhou!" };
     char scoreText[3];
     char movementsText[15] = { "Movimentos: " };
-    bool running = true;
-    bool playing = true;
+    int gameState = 3;
+    /* 
+    Sobre o gameState:
+    0 = Menu,
+    1 = Level Select,
+    2 = "Tutorial/Presentation",
+    3 = Playing,
+    4 = Finished Level,
+    5 = Exit
+    */
 
     //-------------------------------PREENCHENDO O STRUCT---------------------------------//
-
     cardPos card[8]{};
     deck cardData[4];
     cardData[0] = { 0, al_map_rgb(250, 200, 250) };
@@ -70,6 +77,7 @@ int main() {
 
     ALLEGRO_DISPLAY* display = al_create_display(1280, 720); //Dimensões do Display
     ALLEGRO_TIMER* timer = al_create_timer(1.0/60);
+    ALLEGRO_TIMER* cardTimer = al_create_timer(1.0/60);
     ALLEGRO_BITMAP* bitmap;
     ALLEGRO_BITMAP* cat; //VARIÁVEL DOS GATOS
     ALLEGRO_FONT* font = al_load_ttf_font("./assets/font/alterebro-pixel.ttf", 40, 0);
@@ -89,66 +97,73 @@ int main() {
     assert(display != NULL);
     al_start_timer(timer);
 
-    while (running) {
+    while(gameState != 5){
 
         ALLEGRO_EVENT event; //Gera os Eventos
         al_wait_for_event(queue, &event);
        
         if (event.type == ALLEGRO_EVENT_TIMER) {
-
+            // Sempre vai ser renderizado (Não colocar condição de gameState)
             al_clear_to_color(al_map_rgb(0, 150, 220));
-
             al_draw_bitmap(bitmap, 0, 0, 0); //DESENHA O TILE (BACKGROUND)
-            al_draw_bitmap(cat, catX, catY, 0); //DESENHA O GATO
+            //----
 
-            drawCards(card, cardData);
+            if (gameState == 0){
+                // Menu
+           }
 
-            al_draw_rectangle(320, 700, 1250, 600, al_map_rgb(255, 255, 255), 3); // Caixa de diálogo
-            al_draw_text(font, al_map_rgb(255, 255, 255), 330, 600, 0, dialogText);
-            al_draw_text(font, al_map_rgb(255, 255, 255), 800, 10, 0, "Movimentos: ");
-            al_draw_textf(font, al_map_rgb(255, 255, 255), 940, 10, 0, "%d", movement);
-            al_draw_text(font, al_map_rgb(255, 255, 255), 1000, 10, 0, "Pontos: ");
-            al_draw_textf(font, al_map_rgb(255, 255, 255), 1090, 10, 0, "%d", score);
-
-            if (score >= 4) {
-                playing = false;
-                al_draw_filled_rectangle(0, 0, 1280, 720, al_map_rgba(0, 0, 0, 155));
-                al_draw_text(biggerFont, al_map_rgb(255, 255, 255), displayX/2 - 220, displayY/2 - 50, 0, winText);
-                al_draw_text(
-                    font, 
-                    al_map_rgb(255, 255, 255), 
-                    displayX / 2 - 235, 
-                    displayY / 2 + 30, 
-                    0, 
-                    "Jogar Novamente"); 
-                al_draw_rectangle(
-                    displayX / 2 - 250, 
-                    displayY / 2 + 20, 
-                    displayX / 2 - 35, 
-                    displayY /2 + 85, 
-                    al_map_rgb(255, 255, 255), 
-                    3
-                ); //Retângulo do "Jogar Novamente"
-                al_draw_text(
-                    font, 
-                    al_map_rgb(255, 255, 255), 
-                    displayX / 2 + 200, 
-                    displayY / 2 + 30, 
-                    0, 
-                    "Sair"
-                );//Retângulo do "Sair"
-                al_draw_rectangle(
-                    displayX / 2 + 150, displayY / 2 + 20, 
-                    displayX / 2 + 285, displayY / 2 + 85, 
-                    al_map_rgb(255, 255, 255), 
-                    3
-                );
-                for (int i = 0; i < 8; i++) {
-                    card[i].locked = true;
+            if(gameState == 3 || gameState == 4) {
+                al_draw_bitmap(cat, catX, catY, 0);
+                drawCards(card, cardData);
+                al_draw_rectangle(320, 700, 1250, 600, al_map_rgb(255, 255, 255), 3); // Caixa de diálogo
+                al_draw_text(font, al_map_rgb(255, 255, 255), 330, 600, 0, dialogText);
+                al_draw_text(font, al_map_rgb(255, 255, 255), 800, 10, 0, "Movimentos: ");
+                al_draw_textf(font, al_map_rgb(255, 255, 255), 940, 10, 0, "%d", movement);
+                al_draw_text(font, al_map_rgb(255, 255, 255), 1000, 10, 0, "Pontos: ");
+                al_draw_textf(font, al_map_rgb(255, 255, 255), 1090, 10, 0, "%d", score);
+                if (score >= 4) {
+                    gameState = 4;
+                    al_draw_filled_rectangle(0, 0, 1280, 720, al_map_rgba(0, 0, 0, 155));
+                    al_draw_text(biggerFont, al_map_rgb(255, 255, 255), displayX/2 - 220, displayY/2 - 50, 0, winText);
+                    al_draw_text(
+                        font, 
+                        al_map_rgb(255, 255, 255), 
+                        displayX / 2 - 235, 
+                        displayY / 2 + 30, 
+                        0, 
+                        "Jogar Novamente"); 
+                    al_draw_rectangle(
+                        displayX / 2 - 250, 
+                        displayY / 2 + 20, 
+                        displayX / 2 - 35, 
+                        displayY /2 + 85, 
+                        al_map_rgb(255, 255, 255), 
+                        3
+                    ); //Retângulo do "Jogar Novamente"
+                    al_draw_text(
+                        font, 
+                        al_map_rgb(255, 255, 255), 
+                        displayX / 2 + 200, 
+                        displayY / 2 + 30, 
+                        0, 
+                        "Sair"
+                    );//Retângulo do "Sair"
+                    al_draw_rectangle(
+                        displayX / 2 + 150, displayY / 2 + 20, 
+                        displayX / 2 + 285, displayY / 2 + 85, 
+                        al_map_rgb(255, 255, 255), 
+                        3
+                    );
+                    for (int i = 0; i < 8; i++) {
+                        card[i].locked = true;
+                    }
                 }
             }
+
+            // Sempre vai ser renderizado (Não colocar condição de gameState)
             al_draw_circle(mouseX, mouseY, 5, al_map_rgb(255, 255, 255), 2);
             al_flip_display();
+            //----
         }
 
         //-------------------------------LOCALIZAÇÃO DO MOUSE---------------------------------//
@@ -163,9 +178,7 @@ int main() {
         // UP: Soltou o botão
 
         if (event.type == ALLEGRO_EVENT_MOUSE_BUTTON_DOWN){
-
             //-------------------------------DIÁLOGO DE TEXTO---------------------------------//
-
             if (mouseX >= 320 && mouseX <= 1250 && mouseY <= 700 && mouseY >= 600) {
                 switch (dialogStep) {
                 case 0: 
@@ -197,7 +210,7 @@ int main() {
                 if (score == 0 && movement == 0) {
                     card[i].locked = false;
                 }
-                if (mouseX >= card[i].x1 && mouseX <= card[i].x2 && mouseY >= card[i].y1 && mouseY <= card[i].y2 && !card[i].locked && playing) {
+                if (mouseX >= card[i].x1 && mouseX <= card[i].x2 && mouseY >= card[i].y1 && mouseY <= card[i].y2 && !card[i].locked && gameState == 3) {
                     if (!hasFlippedCard) {
                         firstCard = i;
                         card[i].flipped = true;
@@ -220,15 +233,24 @@ int main() {
                     }                    
                 }
             }
-            if (mouseX >= displayX / 2 - 250 && mouseY >= displayY / 2 + 20 && mouseX <= displayX / 2 - 35 && mouseY <= displayY / 2 + 85 && !playing) { // DÚVIDA SEVERA IMPORTANTE
+            if (
+                mouseX >= displayX / 2 - 250 && mouseY >= displayY / 2 + 20 && 
+                mouseX <= displayX / 2 - 35 &&  mouseY <= displayY / 2 + 85 && 
+                gameState == 4) { // TENTAR NOVAMENTE
                 mapCards(card);
                 movement = 0;
                 score = 0;
-                playing = true;
+                gameState = 3;
+            }
+            if (mouseX >= displayX / 2 + 150 && mouseY >= displayY / 2 + 20 && 
+                mouseX <= displayX / 2 + 285 && mouseY <= displayY / 2 + 85  && 
+                gameState == 4) { // SAIR
+                // TODO: Colocar para voltar para o menu
+                gameState = 5;
             }
         }
 
-        if (event.type == ALLEGRO_EVENT_DISPLAY_CLOSE) { running = false; }
+        if (event.type == ALLEGRO_EVENT_DISPLAY_CLOSE) { gameState = 5; }
     }
 
     destroyGame(display, timer, bitmap, font);
