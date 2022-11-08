@@ -6,6 +6,8 @@
 #include <allegro5/allegro_font.h>
 #include <allegro5/allegro_ttf.h>
 #include <queue>
+#include <allegro5/allegro_audio.h> 
+#include <allegro5/allegro_acodec.h>
 
 // Funções
 #include "destroyGame.h"
@@ -34,7 +36,7 @@ int main() {
     int mouseX = 0, mouseY = 0;
     int dialogStep = 0;
 
-    int catX = 40, catY = 418;
+    int catX = 40, catY = 440;
 
 
     int firstCard = NULL;
@@ -58,12 +60,14 @@ int main() {
     cardData[3] = { 3, al_map_rgb(75, 75, 75) };
     mapCards(card);
 
-    //-------------------------------DISPLAY---------------------------------//
+    //-------------------------------DISPLAY E ADDONs---------------------------------//
 
     al_init(); //Inicia o Allegro e os seus Addons
     al_init_image_addon();
     al_init_ttf_addon();
     al_init_primitives_addon();
+    al_install_audio(); //Addon de audio
+    al_init_acodec_addon(); //Addon que da suporte as extensoes de áudio
 
     //-------------------------------VARIÁVEIS DO ALLEGRO---------------------------------//
 
@@ -74,6 +78,9 @@ int main() {
     ALLEGRO_FONT* font = al_load_ttf_font("alterebro-pixel.ttf", 40, 0);
     ALLEGRO_FONT* biggerFont = al_load_ttf_font("alterebro-pixel.ttf", 80, 0);
     ALLEGRO_EVENT_QUEUE* queue = al_create_event_queue(); //Cria uma fila de eventos
+    //ALLEGRO_AUDIO_STREAM* musicaFundo = NULL; //Variável da música de fundo
+    ALLEGRO_SAMPLE_INSTANCE* songInstance = NULL;
+    ALLEGRO_SAMPLE* song = NULL;
 
     int displayX = al_get_display_width(display);
     int displayY = al_get_display_height(display);
@@ -90,15 +97,30 @@ int main() {
 
     while (running) {
 
+
         ALLEGRO_EVENT event; //Gera os Eventos
         al_wait_for_event(queue, &event);
        
         if (event.type == ALLEGRO_EVENT_TIMER) {
 
+ //-------------------------------ÁUDIOS-----------------------------------------//
+
+            al_reserve_samples(1);
+            song = al_load_sample("songTest.ogg");
+            songInstance = al_create_sample_instance(song);
+            al_set_sample_instance_playmode(songInstance, ALLEGRO_PLAYMODE_LOOP);
+           
+            al_attach_sample_instance_to_mixer(songInstance, al_get_default_mixer());
+            al_play_sample_instance(songInstance);
+
+ //-----------------------------------------------------------------------------//
+
+
             al_clear_to_color(al_map_rgb(0, 150, 220));
 
             al_draw_bitmap(bitmap, 0, 0, 0); //DESENHA O TILE (BACKGROUND)
             al_draw_bitmap(cat, catX, catY, 0); //DESENHA O GATO
+
 
             drawCards(card, cardData);
 
@@ -108,6 +130,8 @@ int main() {
             al_draw_textf(font, al_map_rgb(255, 255, 255), 940, 10, 0, "%d", movement);
             al_draw_text(font, al_map_rgb(255, 255, 255), 1000, 10, 0, "Pontos: ");
             al_draw_textf(font, al_map_rgb(255, 255, 255), 1090, 10, 0, "%d", score);
+
+            
 
             if (score >= 4) {
                 playing = false;
@@ -167,24 +191,26 @@ int main() {
             if (mouseX >= 320 && mouseX <= 1250 && mouseY <= 700 && mouseY >= 600) {
                 switch (dialogStep) {
                 case 0: 
-                    strcpy_s(dialogText, "Neste jogo da memória voce aprenderá Inglês por assimilação");
+                    strcpy_s(dialogText, "Neste jogo da memória voce aprenderá Inglês por assimilação (GATO 1)");
                     dialogStep++;
                     cat = al_load_bitmap("cat1r.png");
+                    catX = 40, catY = 440;
                 break;
                 case 1:
-                    strcpy_s(dialogText, "Teste de Texto 2");
+                    strcpy_s(dialogText, "GATO 2");
                     dialogStep++;
                     cat = al_load_bitmap("cat2r.png");
-                    catX = 15, catY = 458;
+                    catX = 15, catY = 440;
                 break;
                 case 2:
-                    strcpy_s(dialogText, "Teste de Texto 3");
+                    strcpy_s(dialogText, "GATO 3");
                     dialogStep++;
                     cat = al_load_bitmap("cat3r.png");
-                    catX = 40, catY = 418;
+                    catX = 50, catY = 430;
                 break;
                 case 3:
-                    strcpy_s(dialogText, "Teste de Texto 4");
+                    strcpy_s(dialogText, "GATO 3 DNV");
+                    catX = 50, catY = 430;
                     dialogStep = 0;
                 break;
                 }
@@ -230,5 +256,8 @@ int main() {
     }
 
     destroyGame(display, timer, bitmap, font);
+    //al_destroy_audio_stream(musicaFundo);
+    al_destroy_sample_instance(songInstance);
+    al_destroy_sample(song);
     return 0;
 }
