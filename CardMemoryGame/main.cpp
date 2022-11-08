@@ -119,7 +119,7 @@ int main() {
 
     while(gameState != 5){
 
-        ALLEGRO_EVENT event; //Gera os Eventos
+        ALLEGRO_EVENT event;
         al_wait_for_event(queue, &event);
        
         if (event.type == ALLEGRO_EVENT_TIMER) {
