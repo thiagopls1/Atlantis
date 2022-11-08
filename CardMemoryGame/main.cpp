@@ -49,6 +49,7 @@ int main() {
     char scoreText[3];
     char movementsText[15] = { "Movimentos: " };
     int gameState = 3;
+
     /* 
     Sobre o gameState:
     0 = Menu,
@@ -101,38 +102,41 @@ int main() {
     bitmap = al_load_bitmap("./assets/bg/tile.png");
     cat = al_load_bitmap("./assets/cat/cat1r.png");
 
+    //-------------------------------ÁUDIOS-----------------------------------------//
+
+    al_reserve_samples(1);
+    song = al_load_sample("./asstes/sfx/songTest.wav");
+    songInstance = al_create_sample_instance(song);
+    al_set_sample_instance_playmode(songInstance, ALLEGRO_PLAYMODE_LOOP);
+
+    al_attach_sample_instance_to_mixer(songInstance, al_get_default_mixer());
+    al_play_sample_instance(songInstance); // AUDIO TESTE
+
+    //-----------------------------------------------------------------------------//
+
     assert(display != NULL);
     al_start_timer(timer);
 
     while(gameState != 5){
-
 
         ALLEGRO_EVENT event; //Gera os Eventos
         al_wait_for_event(queue, &event);
        
         if (event.type == ALLEGRO_EVENT_TIMER) {
 
- //-------------------------------ÁUDIOS-----------------------------------------//
-
-            al_reserve_samples(1);
-            song = al_load_sample("songTest.ogg");
-            songInstance = al_create_sample_instance(song);
-            al_set_sample_instance_playmode(songInstance, ALLEGRO_PLAYMODE_LOOP);
-           
-            al_attach_sample_instance_to_mixer(songInstance, al_get_default_mixer());
-            al_play_sample_instance(songInstance);
-
- //-----------------------------------------------------------------------------//
+ // aqui tava o audio
 
 
             // Sempre vai ser renderizado (Não colocar condição de gameState)
             al_clear_to_color(al_map_rgb(0, 150, 220));
             al_draw_bitmap(bitmap, 0, 0, 0); //DESENHA O TILE (BACKGROUND)
-            //----
+
+            //-------------------------------------------------------------//
 
             if (gameState == 0){
                 // Menu
-           }
+            }
+
 
             if(gameState == 3 || gameState == 4) {
                 al_draw_bitmap(cat, catX, catY, 0);
