@@ -44,7 +44,7 @@ int main() {
     bool hasFlippedCard = false;
     int movement = 0, score = 0;
 
-    char dialogText[1000] = {"Olá Seja bem vindo(a) ao nosso jogo da memória!!!."}; // MENSAGEM DE BOAS VINDAS (Precisa arrumar a digitação e colocar a quebra de linha)
+    char dialogText[1000] = {"Olá Seja bem vindo(a) ao nosso jogo da memória!!!."};
     char winText[1000] = { "Parabéns, você ganhou!" };
     char scoreText[3];
     char movementsText[15] = { "Movimentos: " };
@@ -71,11 +71,11 @@ int main() {
 
     //-------------------------------DISPLAY E ADDONs---------------------------------//
 
-    al_init(); //Inicia o Allegro e os seus Addons
+    al_init();
     al_init_image_addon();
     al_init_ttf_addon();
     al_init_primitives_addon();
-    al_install_audio(); //Addon de audio
+    al_install_audio();
     al_init_acodec_addon(); //Addon que da suporte as extensoes de áudio
 
     //-------------------------------VARIÁVEIS DO ALLEGRO---------------------------------//
@@ -84,7 +84,7 @@ int main() {
     ALLEGRO_TIMER* timer = al_create_timer(1.0/60);
     ALLEGRO_TIMER* cardTimer = al_create_timer(1.0/60);
     ALLEGRO_BITMAP* bitmap;
-    ALLEGRO_BITMAP* cat; //VARIÁVEL DOS GATOS
+    ALLEGRO_BITMAP* cat; // VARIÁVEL DOS GATOS
     ALLEGRO_FONT* font = al_load_ttf_font("./assets/font/alterebro-pixel.ttf", 40, 0);
     ALLEGRO_FONT* biggerFont = al_load_ttf_font("./assets/font/alterebro-pixel.ttf", 80, 0);
     ALLEGRO_EVENT_QUEUE* queue = al_create_event_queue(); //Cria uma fila de eventos
@@ -124,17 +124,14 @@ int main() {
        
         if (event.type == ALLEGRO_EVENT_TIMER) {
 
- // aqui tava o audio
-
-
             // Sempre vai ser renderizado (Não colocar condição de gameState)
             al_clear_to_color(al_map_rgb(0, 150, 220));
-            al_draw_bitmap(bitmap, 0, 0, 0); //DESENHA O TILE (BACKGROUND)
+            al_draw_bitmap(bitmap, 0, 0, 0); // DESENHA O TILE (BACKGROUND)
 
             //-------------------------------------------------------------//
 
             if (gameState == 0){
-                // Menu
+                // TODO: Menu
             }
 
 
@@ -281,7 +278,7 @@ int main() {
 
         if (event.type == ALLEGRO_EVENT_DISPLAY_CLOSE) { gameState = 5; }
     }
-
+    // TODO: Colocar os destroys dentro da função
     destroyGame(display, timer, bitmap, font);
     //al_destroy_audio_stream(musicaFundo);
     al_destroy_sample_instance(songInstance);
