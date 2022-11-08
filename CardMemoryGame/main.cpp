@@ -1,4 +1,3 @@
-
 // Bibliotecas do allegro
 #include <allegro5\allegro5.h>
 #include <allegro5/allegro_image.h>
@@ -42,7 +41,7 @@ int main() {
     bool hasFlippedCard = false;
     int movement = 0, score = 0;
 
-    char dialogText[1000] = {"Olá Seja bem vindo(a) ao nosso jogo da memória!!!."}; // MENSAGEM DE BOAS VINDAS (Precisa arrumar a digitação e colocar a quebra de linha)
+    char dialogText[1000] = {"Olá Seja bem vindo(a) ao nosso jogo da memória!!!."};
     char winText[1000] = { "Parabéns, você ganhou!" };
     char scoreText[3];
     char movementsText[15] = { "Movimentos: " };
@@ -77,18 +76,19 @@ int main() {
 
     ALLEGRO_DISPLAY* display = al_create_display(1280, 720); //Dimensões do Display
     ALLEGRO_TIMER* timer = al_create_timer(1.0/60);
-    ALLEGRO_TIMER* cardTimer = al_create_timer(1.0/60);
     ALLEGRO_BITMAP* bitmap;
     ALLEGRO_BITMAP* cat; //VARIÁVEL DOS GATOS
     ALLEGRO_FONT* font = al_load_ttf_font("./assets/font/alterebro-pixel.ttf", 40, 0);
     ALLEGRO_FONT* biggerFont = al_load_ttf_font("./assets/font/alterebro-pixel.ttf", 80, 0);
     ALLEGRO_EVENT_QUEUE* queue = al_create_event_queue(); //Cria uma fila de eventos
+    ALLEGRO_EVENT_QUEUE* awaitCardTimer = al_create_event_queue();
 
     int displayX = al_get_display_width(display);
     int displayY = al_get_display_height(display);
 
  //-------------------------------FILA DE EVENTOS---------------------------------//
     registerEventsSource(queue, display, timer);
+
     al_hide_mouse_cursor(display);
     al_set_window_title(display, "Memory Game");
     bitmap = al_load_bitmap("./assets/bg/tile.png");
@@ -102,17 +102,18 @@ int main() {
         ALLEGRO_EVENT event; //Gera os Eventos
         al_wait_for_event(queue, &event);
        
-        if (event.type == ALLEGRO_EVENT_TIMER) {
+        if (event.type == ALLEGRO_EVENT_TIMER){
+
             // Sempre vai ser renderizado (Não colocar condição de gameState)
             al_clear_to_color(al_map_rgb(0, 150, 220));
-            al_draw_bitmap(bitmap, 0, 0, 0); //DESENHA O TILE (BACKGROUND)
+            al_draw_bitmap(bitmap, 0, 0, 0);
             //----
 
-            if (gameState == 0){
-                // Menu
-           }
+            if (gameState == 0) {
+                // TODO: Menu
+            }
 
-            if(gameState == 3 || gameState == 4) {
+            if (gameState == 3 || gameState == 4) {
                 al_draw_bitmap(cat, catX, catY, 0);
                 drawCards(card, cardData);
                 al_draw_rectangle(320, 700, 1250, 600, al_map_rgb(255, 255, 255), 3); // Caixa de diálogo
@@ -124,34 +125,34 @@ int main() {
                 if (score >= 4) {
                     gameState = 4;
                     al_draw_filled_rectangle(0, 0, 1280, 720, al_map_rgba(0, 0, 0, 155));
-                    al_draw_text(biggerFont, al_map_rgb(255, 255, 255), displayX/2 - 220, displayY/2 - 50, 0, winText);
+                    al_draw_text(biggerFont, al_map_rgb(255, 255, 255), displayX / 2 - 220, displayY / 2 - 50, 0, winText);
                     al_draw_text(
-                        font, 
-                        al_map_rgb(255, 255, 255), 
-                        displayX / 2 - 235, 
-                        displayY / 2 + 30, 
-                        0, 
-                        "Jogar Novamente"); 
+                        font,
+                        al_map_rgb(255, 255, 255),
+                        displayX / 2 - 235,
+                        displayY / 2 + 30,
+                        0,
+                        "Jogar Novamente");
                     al_draw_rectangle(
-                        displayX / 2 - 250, 
-                        displayY / 2 + 20, 
-                        displayX / 2 - 35, 
-                        displayY /2 + 85, 
-                        al_map_rgb(255, 255, 255), 
+                        displayX / 2 - 250,
+                        displayY / 2 + 20,
+                        displayX / 2 - 35,
+                        displayY / 2 + 85,
+                        al_map_rgb(255, 255, 255),
                         3
                     ); //Retângulo do "Jogar Novamente"
                     al_draw_text(
-                        font, 
-                        al_map_rgb(255, 255, 255), 
-                        displayX / 2 + 200, 
-                        displayY / 2 + 30, 
-                        0, 
+                        font,
+                        al_map_rgb(255, 255, 255),
+                        displayX / 2 + 200,
+                        displayY / 2 + 30,
+                        0,
                         "Sair"
                     );//Retângulo do "Sair"
                     al_draw_rectangle(
-                        displayX / 2 + 150, displayY / 2 + 20, 
-                        displayX / 2 + 285, displayY / 2 + 85, 
-                        al_map_rgb(255, 255, 255), 
+                        displayX / 2 + 150, displayY / 2 + 20,
+                        displayX / 2 + 285, displayY / 2 + 85,
+                        al_map_rgb(255, 255, 255),
                         3
                     );
                     for (int i = 0; i < 8; i++) {
@@ -166,16 +167,10 @@ int main() {
             //----
         }
 
-        //-------------------------------LOCALIZAÇÃO DO MOUSE---------------------------------//
-
         if (event.type == ALLEGRO_EVENT_MOUSE_AXES) {
             mouseX = event.mouse.x;
             mouseY = event.mouse.y;
         }
-
-        // Exemplo de ação ao clicar:
-        // DOWN: Clicou no botão
-        // UP: Soltou o botão
 
         if (event.type == ALLEGRO_EVENT_MOUSE_BUTTON_DOWN){
             //-------------------------------DIÁLOGO DE TEXTO---------------------------------//
@@ -205,7 +200,6 @@ int main() {
                 }
             }
 
-            //-------------------------------CARTA CLICADA---------------------------------//
             for (int i = 0; i < 8; i++) {
                 if (score == 0 && movement == 0) {
                     card[i].locked = false;
@@ -222,8 +216,13 @@ int main() {
                             score++;
                             card[i].flipped = true;
                             card[i].locked = true;
-                        }
-                        else {
+                        } else {
+                            card[i].flipped = true;
+                            while (al_get_timer_count(timer) % 60 != 59) {
+                                drawCards(card, cardData);
+                                al_flip_display();
+                            }
+                            card[i].flipped = false;
                             card[firstCard].flipped = false;
                             card[firstCard].locked = false;
                         }
