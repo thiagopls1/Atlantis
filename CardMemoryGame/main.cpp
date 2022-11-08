@@ -103,8 +103,6 @@ int main() {
         al_wait_for_event(queue, &event);
        
         if (event.timer.source == timer){
-            
-            printf("timer: %d\n", al_get_timer_count(timer) % 60);
 
             // Sempre vai ser renderizado (Não colocar condição de gameState)
             al_clear_to_color(al_map_rgb(0, 150, 220));
