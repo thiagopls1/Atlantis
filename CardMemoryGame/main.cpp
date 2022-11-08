@@ -199,10 +199,6 @@ int main() {
             mouseY = event.mouse.y;
         }
 
-        // Exemplo de ação ao clicar:
-        // DOWN: Clicou no botão
-        // UP: Soltou o botão
-
         if (event.type == ALLEGRO_EVENT_MOUSE_BUTTON_DOWN){
             //-------------------------------DIÁLOGO DE TEXTO---------------------------------//
             if (mouseX >= 320 && mouseX <= 1250 && mouseY <= 700 && mouseY >= 600) {
@@ -251,6 +247,12 @@ int main() {
                             card[i].locked = true;
                         }
                         else {
+                            card[i].flipped = true;
+                            while (al_get_timer_count(timer) % 60 != 59) {
+                                drawCards(card, cardData);
+                                al_flip_display();
+                            }
+                            card[i].flipped = false;
                             card[firstCard].flipped = false;
                             card[firstCard].locked = false;
                         }

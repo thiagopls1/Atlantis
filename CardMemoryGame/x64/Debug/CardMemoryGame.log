@@ -1,16 +1,5 @@
-﻿  checkFlippedCards.cpp
-  destroyGame.cpp
-  drawCards.cpp
-C:\Users\Thiago\source\repos\Atlantis\CardMemoryGame\cardPos.h(10,8): warning C4091: '': ignored on left of 'cardPos' when no variable is declared
-C:\Users\Thiago\source\repos\Atlantis\CardMemoryGame\deck.h(8,5): warning C4091: '': ignored on left of 'deck' when no variable is declared
-  main.cpp
+﻿  main.cpp
 C:\Users\Thiago\source\repos\Atlantis\CardMemoryGame\cardPos.h(10,8): warning C4091: '': ignored on left of 'cardPos' when no variable is declared
 C:\Users\Thiago\source\repos\Atlantis\CardMemoryGame\deck.h(8,5): warning C4091: '': ignored on left of 'deck' when no variable is declared
 C:\Users\Thiago\source\repos\Atlantis\CardMemoryGame\main.cpp(49,10): warning C4101: 'scoreText': unreferenced local variable
-  mapCards.cpp
-C:\Users\Thiago\source\repos\Atlantis\CardMemoryGame\cardPos.h(10,8): warning C4091: '': ignored on left of 'cardPos' when no variable is declared
-  registerEventsSource.cpp
-  Generating Code...
-C:\Users\Thiago\source\repos\Atlantis\CardMemoryGame\checkFlippedCards.cpp(10): warning C4715: 'checkFlippedCards': not all control paths return a value
-  LINK : C:\Users\Thiago\source\repos\Atlantis\x64\Debug\CardMemoryGame.exe not found or not built by the last incremental link; performing full link
   CardMemoryGame.vcxproj -> C:\Users\Thiago\source\repos\Atlantis\x64\Debug\CardMemoryGame.exe
