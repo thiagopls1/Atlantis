@@ -1,14 +1,3 @@
-
-// Bibliotecas do allegro
-#include <allegro5\allegro5.h>
-#include <allegro5/allegro_image.h>
-#include <allegro5/allegro_primitives.h>
-#include <allegro5/allegro_font.h>
-#include <allegro5/allegro_ttf.h>
-#include <queue>
-#include <allegro5/allegro_audio.h> 
-#include <allegro5/allegro_acodec.h>
-
 // Funções
 #include "destroyGame.h"
 #include "registerEventsSource.h"
@@ -20,9 +9,19 @@
 #include "cardPos.h"
 #include "deck.h"
 
+// Bibliotecas do allegro
+#include <allegro5\allegro5.h>
+#include <allegro5/allegro_image.h>
+#include <allegro5/allegro_primitives.h>
+#include <allegro5/allegro_font.h>
+#include <allegro5/allegro_ttf.h>
+#include <queue>
+#include <allegro5/allegro_audio.h> 
+#include <allegro5/allegro_acodec.h>
+
 // Bibliotecas padrões do C
-#include "stdlib.h"
-#include "time.h"
+#include <stdlib.h>
+#include <time.h>
 #include <string.h>
 #include <stdio.h>
 #include <locale.h>
@@ -33,26 +32,22 @@ int main() {
     srand(time(NULL));
 
     //-------------------------------VARIÁVEIS LOCAIS---------------------------------//
-
     int mouseX = 0, mouseY = 0;
     int dialogStep = 0;
 
     int catX = 40, catY = 440;
 
     int timeLeft = 15;
-
+    int timeOverPenalty = 2;
+    int wrongCardPenalty = 5;
 
     int firstCard = NULL;
     bool hasFlippedCard = false;
     int movement = 0, score = 0;
-
     int cardsFlipped = 0;
 
     char dialogText[1000] = {"Olá Seja bem vindo(a) ao nosso jogo da memória!!!."}; // MENSAGEM DE BOAS VINDAS (Precisa arrumar a digitação e colocar a quebra de linha)
-    char winText[1000] = { "Parabéns, você ganhou!" };
-    char scoreText[3];
-    char movementsText[15] = { "Movimentos: " };
-    int gameState = 3;
+    int gameState = 1;
 
     /* 
     Sobre o gameState:
@@ -71,7 +66,6 @@ int main() {
     cardData[1] = { 1, al_map_rgb(250, 250, 0) };
     cardData[2] = { 2, al_map_rgb(0, 250, 250) };
     cardData[3] = { 3, al_map_rgb(75, 75, 75) };
-    mapCards(card);
 
     //-------------------------------DISPLAY E ADDONs---------------------------------//
 
@@ -100,28 +94,22 @@ int main() {
     int displayX = al_get_display_width(display);
     int displayY = al_get_display_height(display);
 
- //-------------------------------FILA DE EVENTOS---------------------------------//
-    registerEventsSource(queue, display, timer);
-    al_register_event_source(queue, al_get_timer_event_source(cardTimer));
-    al_register_event_source(queue, al_get_timer_event_source(scoreTimer));
+    //-------------------------------FILA DE EVENTOS---------------------------------//
+    registerEventsSource(queue, display, timer, scoreTimer, cardTimer);
     al_hide_mouse_cursor(display);
     al_set_window_title(display, "Memory Game");
     bitmap = al_load_bitmap("./assets/bg/tile.png");
     cat = al_load_bitmap("./assets/cat/cat1r.png");
 
     //-------------------------------ÁUDIOS-----------------------------------------//
-
     al_reserve_samples(1);
     song = al_load_sample("./asstes/sfx/songTest.wav");
     songInstance = al_create_sample_instance(song);
     al_set_sample_instance_playmode(songInstance, ALLEGRO_PLAYMODE_LOOP);
     al_attach_sample_instance_to_mixer(songInstance, al_get_default_mixer());
-    
-
     //-----------------------------------------------------------------------------//
 
     assert(display != NULL);
-    al_start_timer(scoreTimer);
     al_start_timer(cardTimer);
     al_start_timer(timer);
 
@@ -129,30 +117,75 @@ int main() {
 
         ALLEGRO_EVENT event;
         al_wait_for_event(queue, &event);
-       
-        
 
         if (event.type == ALLEGRO_EVENT_TIMER) {
             
             if (event.timer.source == scoreTimer) {
-                if (al_get_timer_count(scoreTimer) >= 15) {
+                if (al_get_timer_count(scoreTimer) >= timeLeft) {
                     al_set_timer_count(scoreTimer, 0);
-                    strcpy_s(dialogText, "Tempo esgotado! você perdeu 2 pontos!");
-                    score -= 2;
+                    if (timeOverPenalty == 1) {
+                        sprintf_s(dialogText, "Tempo esgotado! você perdeu %d ponto!", timeOverPenalty);
+                    }
+                    else {
+                        sprintf_s(dialogText, "Tempo esgotado! você perdeu %d pontos!", timeOverPenalty);
+                    }
+                    score -= timeOverPenalty;
                 }
             }
 
             if (event.timer.source == timer) {
                 // Sempre vai ser renderizado (Não colocar condição de gameState)
                 al_draw_bitmap(bitmap, 0, 0, 0); //DESENHA O TILE (BACKGROUND)
-                //-------------------------------------------------------------//
+                //---------------------------------------------------------------
 
                 if (gameState == 0) {
                     // Menu
                 }
 
                 if (gameState == 1) {
-                    // Level Select
+                    al_draw_text(biggerFont, al_map_rgb(255, 255, 255), displayX / 2, 50, ALLEGRO_ALIGN_CENTRE, "Selecione a dificuldade:");
+                    al_draw_rectangle(
+                        displayX / 2 - 355, displayY / 2 - 20,
+                        displayX / 2 - 155, displayY / 2 + 70,
+                        al_map_rgb(255, 255, 255),
+                        3
+                    );
+                    al_draw_text(
+                        font,
+                        al_map_rgb(255, 255, 255),
+                        displayX / 2 - 255,
+                        displayY / 2,
+                        ALLEGRO_ALIGN_CENTRE,
+                        "Fácil"
+                    );
+                    al_draw_rectangle(
+                        displayX / 2 - 100, displayY / 2 - 20,
+                        displayX / 2 + 100, displayY / 2 + 70,
+                        al_map_rgb(255, 255, 255),
+                        3
+                    );
+                    al_draw_text(
+                        font,
+                        al_map_rgb(255, 255, 255),
+                        displayX / 2,
+                        displayY / 2,
+                        ALLEGRO_ALIGN_CENTRE,
+                        "Médio"
+                    );
+                    al_draw_rectangle(
+                        displayX / 2 + 155, displayY / 2 - 20,
+                        displayX / 2 + 355, displayY / 2 + 70,
+                        al_map_rgb(255, 255, 255),
+                        3
+                    );
+                    al_draw_text(
+                        font,
+                        al_map_rgb(255, 255, 255),
+                        displayX / 2 + 255,
+                        displayY / 2,
+                        ALLEGRO_ALIGN_CENTRE,
+                        "Difícil"
+                    );
                 }
 
                 if (gameState == 2) {
@@ -173,7 +206,12 @@ int main() {
                         al_set_timer_count(scoreTimer, 0);
                         gameState = 4;
                         al_draw_filled_rectangle(0, 0, 1280, 720, al_map_rgba(0, 0, 0, 155));
-                        al_draw_text(biggerFont, al_map_rgb(255, 255, 255), displayX / 2, displayY / 2 - 50, ALLEGRO_ALIGN_CENTRE, winText);
+                        if (score < 0) {
+                            al_draw_text(biggerFont, al_map_rgb(255, 255, 255), displayX / 2, displayY / 2 - 50, ALLEGRO_ALIGN_CENTRE, "Que pena, você perdeu =(");
+                        }
+                        else {
+                            al_draw_text(biggerFont, al_map_rgb(255, 255, 255), displayX / 2, displayY / 2 - 50, ALLEGRO_ALIGN_CENTRE, "Parabéns, você ganhou!");
+                        }
                         al_draw_text(
                             font,
                             al_map_rgb(255, 255, 255),
@@ -214,7 +252,7 @@ int main() {
                 // Sempre vai ser renderizado (Não colocar condição de gameState)
                 al_draw_circle(mouseX, mouseY, 5, al_map_rgb(255, 255, 255), 2);
                 al_flip_display();
-                //----
+                //---------------------------------------------------------------
             }
             
         }
@@ -272,12 +310,14 @@ int main() {
                         if (card[firstCard].id == card[i].id) {
                             al_stop_timer(scoreTimer);
                             score = (timeLeft - al_get_timer_count(scoreTimer)) + score;
+                            sprintf_s(dialogText, "Boa! Você ganhou %d pontos", (timeLeft - al_get_timer_count(scoreTimer)) + 1);
                             score++;
                             card[i].flipped = true;
                             card[i].locked = true;
                         }
                         else {
-                            score -= 5;
+                            score -= wrongCardPenalty;
+                            sprintf_s(dialogText, "Puts! Você perdeu %d pontos", wrongCardPenalty);
                             al_stop_timer(scoreTimer);
                             card[i].flipped = true;
                             al_set_timer_count(cardTimer, 0);
@@ -302,6 +342,52 @@ int main() {
                     cardsFlipped++;
                 }
             }
+            //----------------------------------------------------------------------------//
+            //-------------------------------BOTÕES DO GAME STATE 1 (Level Select)---------------------------------//
+            if (mouseX >= displayX / 2 - 355 && mouseY >= displayY / 2 - 20 &&
+                mouseX <= displayX / 2 - 155 && mouseY <= displayY / 2 + 70 &&
+                gameState == 1
+                ) {
+                // Dificuldade: Fácil
+                timeLeft = 20;
+                timeOverPenalty = 1;
+                wrongCardPenalty = 3;
+
+                cardsFlipped = 0;
+                gameState = 3;
+                mapCards(card);
+                al_start_timer(scoreTimer);
+            }
+            if (mouseX >= displayX / 2 - 100 && mouseY >= displayY / 2 - 20 &&
+                mouseX <= displayX / 2 + 100 && mouseY <=  displayY / 2 + 70 &&
+                gameState == 1
+                ){
+                // Dificuldade: Média
+                timeLeft = 15;
+                timeOverPenalty = 2;
+                wrongCardPenalty = 5;
+
+                cardsFlipped = 0;
+                gameState = 3;
+                mapCards(card);
+                al_start_timer(scoreTimer);
+            }
+            if (mouseX >= displayX / 2 + 155 && mouseY >= displayY / 2 - 20 &&
+                mouseX <= displayX / 2 + 355 && mouseY <= displayY / 2 + 70 &&
+                gameState == 1
+                ) {
+                // Dificuldade: Difícil
+                timeLeft = 8;
+                timeOverPenalty = 4;
+                wrongCardPenalty = 9;
+
+                cardsFlipped = 0;
+                gameState = 3;
+                mapCards(card);
+                al_start_timer(scoreTimer);
+            }
+
+            //-------------------------------BOTÕES DO GAME STATE 4 (Finished Level)---------------------------------//
             if (
                 mouseX >= displayX / 2 - 250 && mouseY >= displayY / 2 + 20 && 
                 mouseX <= displayX / 2 - 35 &&  mouseY <= displayY / 2 + 85 && 
@@ -315,18 +401,19 @@ int main() {
             }
             if (mouseX >= displayX / 2 + 150 && mouseY >= displayY / 2 + 20 && 
                 mouseX <= displayX / 2 + 285 && mouseY <= displayY / 2 + 85  && 
-                gameState == 4) { // SAIR
-                // TODO: Colocar para voltar para o menu
-                gameState = 5;
+                gameState == 4
+                ){ 
+                // SAIR
+                movement = 0;
+                score = 0;
+                gameState = 1;
             }
         }
-
+        // Se o usuário clicar no "X", o gameState será 5 e irá fechar o jogo
         if (event.type == ALLEGRO_EVENT_DISPLAY_CLOSE) { gameState = 5; }
     }
 
-    destroyGame(display, timer, bitmap, font);
-    al_destroy_timer(scoreTimer);
-    al_destroy_timer(cardTimer);
+    destroyGame(display, timer, scoreTimer, cardTimer, bitmap, font);
     al_destroy_sample_instance(songInstance);
     al_destroy_sample(song);
     return 0;
