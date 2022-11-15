@@ -39,10 +39,14 @@ int main() {
 
     int catX = 40, catY = 440;
 
+    int timeLeft = 15;
+
 
     int firstCard = NULL;
     bool hasFlippedCard = false;
     int movement = 0, score = 0;
+
+    int cardsFlipped = 0;
 
     char dialogText[1000] = {"Olá Seja bem vindo(a) ao nosso jogo da memória!!!."}; // MENSAGEM DE BOAS VINDAS (Precisa arrumar a digitação e colocar a quebra de linha)
     char winText[1000] = { "Parabéns, você ganhou!" };
@@ -82,7 +86,8 @@ int main() {
 
     ALLEGRO_DISPLAY* display = al_create_display(1280, 720); //Dimensões do Display
     ALLEGRO_TIMER* timer = al_create_timer(1.0/60);
-    ALLEGRO_TIMER* cardTimer = al_create_timer(1.0/60);
+    ALLEGRO_TIMER* cardTimer = al_create_timer(2.5);
+    ALLEGRO_TIMER* scoreTimer = al_create_timer(1);
     ALLEGRO_BITMAP* bitmap;
     ALLEGRO_BITMAP* cat; //VARIÁVEL DOS GATOS
     ALLEGRO_FONT* font = al_load_ttf_font("./assets/font/alterebro-pixel.ttf", 40, 0);
@@ -97,6 +102,8 @@ int main() {
 
  //-------------------------------FILA DE EVENTOS---------------------------------//
     registerEventsSource(queue, display, timer);
+    al_register_event_source(queue, al_get_timer_event_source(cardTimer));
+    al_register_event_source(queue, al_get_timer_event_source(scoreTimer));
     al_hide_mouse_cursor(display);
     al_set_window_title(display, "Memory Game");
     bitmap = al_load_bitmap("./assets/bg/tile.png");
@@ -108,13 +115,14 @@ int main() {
     song = al_load_sample("./asstes/sfx/songTest.wav");
     songInstance = al_create_sample_instance(song);
     al_set_sample_instance_playmode(songInstance, ALLEGRO_PLAYMODE_LOOP);
-
     al_attach_sample_instance_to_mixer(songInstance, al_get_default_mixer());
-    al_play_sample_instance(songInstance); // AUDIO TESTE
+    
 
     //-----------------------------------------------------------------------------//
 
     assert(display != NULL);
+    al_start_timer(scoreTimer);
+    al_start_timer(cardTimer);
     al_start_timer(timer);
 
     while(gameState != 5){
@@ -122,74 +130,93 @@ int main() {
         ALLEGRO_EVENT event;
         al_wait_for_event(queue, &event);
        
+        
+
         if (event.type == ALLEGRO_EVENT_TIMER) {
-
- // aqui tava o audio
-
-
-            // Sempre vai ser renderizado (Não colocar condição de gameState)
-            al_clear_to_color(al_map_rgb(0, 150, 220));
-            al_draw_bitmap(bitmap, 0, 0, 0); //DESENHA O TILE (BACKGROUND)
-
-            //-------------------------------------------------------------//
-
-            if (gameState == 0){
-                // Menu
-            }
-
-
-            if(gameState == 3 || gameState == 4) {
-                al_draw_bitmap(cat, catX, catY, 0);
-                drawCards(card, cardData);
-                al_draw_rectangle(320, 700, 1250, 600, al_map_rgb(255, 255, 255), 3); // Caixa de diálogo
-                al_draw_text(font, al_map_rgb(255, 255, 255), 330, 600, 0, dialogText);
-                al_draw_text(font, al_map_rgb(255, 255, 255), 800, 10, 0, "Movimentos: ");
-                al_draw_textf(font, al_map_rgb(255, 255, 255), 940, 10, 0, "%d", movement);
-                al_draw_text(font, al_map_rgb(255, 255, 255), 1000, 10, 0, "Pontos: ");
-                al_draw_textf(font, al_map_rgb(255, 255, 255), 1090, 10, 0, "%d", score);
-                if (score >= 4) {
-                    gameState = 4;
-                    al_draw_filled_rectangle(0, 0, 1280, 720, al_map_rgba(0, 0, 0, 155));
-                    al_draw_text(biggerFont, al_map_rgb(255, 255, 255), displayX/2 - 220, displayY/2 - 50, 0, winText);
-                    al_draw_text(
-                        font, 
-                        al_map_rgb(255, 255, 255), 
-                        displayX / 2 - 235, 
-                        displayY / 2 + 30, 
-                        0, 
-                        "Jogar Novamente"); 
-                    al_draw_rectangle(
-                        displayX / 2 - 250, 
-                        displayY / 2 + 20, 
-                        displayX / 2 - 35, 
-                        displayY /2 + 85, 
-                        al_map_rgb(255, 255, 255), 
-                        3
-                    ); //Retângulo do "Jogar Novamente"
-                    al_draw_text(
-                        font, 
-                        al_map_rgb(255, 255, 255), 
-                        displayX / 2 + 200, 
-                        displayY / 2 + 30, 
-                        0, 
-                        "Sair"
-                    );//Retângulo do "Sair"
-                    al_draw_rectangle(
-                        displayX / 2 + 150, displayY / 2 + 20, 
-                        displayX / 2 + 285, displayY / 2 + 85, 
-                        al_map_rgb(255, 255, 255), 
-                        3
-                    );
-                    for (int i = 0; i < 8; i++) {
-                        card[i].locked = true;
-                    }
+            
+            if (event.timer.source == scoreTimer) {
+                if (al_get_timer_count(scoreTimer) >= 15) {
+                    al_set_timer_count(scoreTimer, 0);
+                    strcpy_s(dialogText, "Tempo esgotado! você perdeu 2 pontos!");
+                    score -= 2;
                 }
             }
 
-            // Sempre vai ser renderizado (Não colocar condição de gameState)
-            al_draw_circle(mouseX, mouseY, 5, al_map_rgb(255, 255, 255), 2);
-            al_flip_display();
-            //----
+            if (event.timer.source == timer) {
+                // Sempre vai ser renderizado (Não colocar condição de gameState)
+                al_draw_bitmap(bitmap, 0, 0, 0); //DESENHA O TILE (BACKGROUND)
+                //-------------------------------------------------------------//
+
+                if (gameState == 0) {
+                    // Menu
+                }
+
+                if (gameState == 1) {
+                    // Level Select
+                }
+
+                if (gameState == 2) {
+                    // Tutorial
+                }
+
+
+                if (gameState == 3 || gameState == 4) {
+                    al_draw_bitmap(cat, catX, catY, 0);
+                    drawCards(card, cardData);
+                    al_draw_rectangle(320, 700, 1250, 600, al_map_rgb(255, 255, 255), 3); // Caixa de diálogo
+                    al_draw_text(font, al_map_rgb(255, 255, 255), 330, 600, 0, dialogText);
+                    al_draw_textf(font, al_map_rgb(255, 255, 255), 400, 10, 0, "Tempo restante: %d", timeLeft - al_get_timer_count(scoreTimer));
+                    al_draw_textf(font, al_map_rgb(255, 255, 255), 800, 10, 0, "Movimentos: %d", movement);
+                    al_draw_textf(font, al_map_rgb(255, 255, 255), 1000, 10, 0, "Pontos: %d", score);
+                    if(cardsFlipped == 8){
+                        al_stop_timer(scoreTimer);
+                        al_set_timer_count(scoreTimer, 0);
+                        gameState = 4;
+                        al_draw_filled_rectangle(0, 0, 1280, 720, al_map_rgba(0, 0, 0, 155));
+                        al_draw_text(biggerFont, al_map_rgb(255, 255, 255), displayX / 2, displayY / 2 - 50, ALLEGRO_ALIGN_CENTRE, winText);
+                        al_draw_text(
+                            font,
+                            al_map_rgb(255, 255, 255),
+                            displayX / 2 - 270,
+                            displayY / 2 + 30,
+                            0,
+                            "Jogar Novamente");
+                        //Retângulo do "Jogar Novamente"
+                        al_draw_rectangle(
+                            displayX / 2 - 285,
+                            displayY / 2 + 20,
+                            displayX / 2 - 65,
+                            displayY / 2 + 85,
+                            al_map_rgb(255, 255, 255),
+                            3
+                        );
+                        al_draw_text(
+                            font,
+                            al_map_rgb(255, 255, 255),
+                            displayX / 2 + 200,
+                            displayY / 2 + 30,
+                            0,
+                            "Sair"
+                        );
+                        //Retângulo do "Sair"
+                        al_draw_rectangle(
+                            displayX / 2 + 150, displayY / 2 + 20,
+                            displayX / 2 + 285, displayY / 2 + 85,
+                            al_map_rgb(255, 255, 255),
+                            3
+                        );
+                        for (int i = 0; i < 8; i++) {
+                            card[i].locked = true;
+                        }
+                    }
+                }
+
+                // Sempre vai ser renderizado (Não colocar condição de gameState)
+                al_draw_circle(mouseX, mouseY, 5, al_map_rgb(255, 255, 255), 2);
+                al_flip_display();
+                //----
+            }
+            
         }
 
         //-------------------------------LOCALIZAÇÃO DO MOUSE---------------------------------//
@@ -230,6 +257,7 @@ int main() {
 
             //-------------------------------CARTA CLICADA---------------------------------//
             for (int i = 0; i < 8; i++) {
+                cardsFlipped = 0;
                 if (score == 0 && movement == 0) {
                     card[i].locked = false;
                 }
@@ -242,13 +270,18 @@ int main() {
                     }
                     else {
                         if (card[firstCard].id == card[i].id) {
+                            al_stop_timer(scoreTimer);
+                            score = (timeLeft - al_get_timer_count(scoreTimer)) + score;
                             score++;
                             card[i].flipped = true;
                             card[i].locked = true;
                         }
                         else {
+                            score -= 5;
+                            al_stop_timer(scoreTimer);
                             card[i].flipped = true;
-                            while (al_get_timer_count(timer) % 60 != 59) {
+                            al_set_timer_count(cardTimer, 0);
+                            while(al_get_timer_count(cardTimer) < 1) {
                                 drawCards(card, cardData);
                                 al_flip_display();
                             }
@@ -256,16 +289,25 @@ int main() {
                             card[firstCard].flipped = false;
                             card[firstCard].locked = false;
                         }
+                        al_set_timer_count(scoreTimer, 0);
+                        al_start_timer(scoreTimer);
                         hasFlippedCard = false;
                         movement++;
                         firstCard = NULL;
                     }                    
                 }
             }
+            for (int i = 0; i < 8; i++) {
+                if (card[i].flipped) {
+                    cardsFlipped++;
+                }
+            }
             if (
                 mouseX >= displayX / 2 - 250 && mouseY >= displayY / 2 + 20 && 
                 mouseX <= displayX / 2 - 35 &&  mouseY <= displayY / 2 + 85 && 
                 gameState == 4) { // TENTAR NOVAMENTE
+                al_start_timer(scoreTimer);
+                cardsFlipped = 0;
                 mapCards(card);
                 movement = 0;
                 score = 0;
@@ -283,7 +325,8 @@ int main() {
     }
 
     destroyGame(display, timer, bitmap, font);
-    //al_destroy_audio_stream(musicaFundo);
+    al_destroy_timer(scoreTimer);
+    al_destroy_timer(cardTimer);
     al_destroy_sample_instance(songInstance);
     al_destroy_sample(song);
     return 0;

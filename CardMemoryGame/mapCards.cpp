@@ -6,7 +6,7 @@
 
 void mapCards(cardPos card[8]){
     int x, y, temp;
-    x = 400;
+    x = 415;
     y = 70;
     int number[4] = {0, 0, 0, 0};
     
@@ -18,10 +18,10 @@ void mapCards(cardPos card[8]){
         number[temp]++;
 
         card[i] = { temp, false, false, x, y, x + 150, y + 200};
-        x += 200;
+        x += 175;
     }
-    x = 400;
-    y = 320;
+    x = 415;
+    y = 295;
     for (int i = 4; i < 8; i++) {
         temp = rand() % 4;
         while (number[temp] >= 2) {
@@ -30,7 +30,6 @@ void mapCards(cardPos card[8]){
         number[temp]++;
 
         card[i] = { temp, false, false, x, y, x + 150, y + 200 };
-        x += 200;
+        x += 175;
     }
-    printf("\n");
 }
