@@ -4,8 +4,19 @@
 #include "time.h"
 #include "stdio.h"
 
+/*
+    vetor começa com tudo zero
+
+    no for:
+    randomiza
+    tá dentro do vetor?
+    randomiza
+    :
+    continua
+*/
+
 void mapCards(cardPos card[8]){
-    int x, y, temp;
+    int x, y, temp, lang = 0;
     x = 415;
     y = 70;
     int number[4] = {0, 0, 0, 0};
@@ -16,8 +27,14 @@ void mapCards(cardPos card[8]){
             temp = rand() % 4;
         }
         number[temp]++;
+        if (number[temp] == 1) {
+            lang = 0;
+        }
+        else {
+            lang = 1;
+        }
 
-        card[i] = { temp, false, false, x, y, x + 150, y + 200};
+        card[i] = { temp, false, false, x, y, x + 150, y + 200, lang };
         x += 175;
     }
     x = 415;
@@ -28,8 +45,14 @@ void mapCards(cardPos card[8]){
             temp = rand() % 4;
         }
         number[temp]++;
+        if (number[temp] == 1) {
+            lang = 0;
+        }
+        else {
+            lang = 1;
+        }
 
-        card[i] = { temp, false, false, x, y, x + 150, y + 200 };
+        card[i] = { temp, false, false, x, y, x + 150, y + 200, lang };
         x += 175;
     }
 }

@@ -6,5 +6,6 @@ struct cardPos{
 	bool flipped;
 	bool locked;
 	int x1, y1, x2, y2;
+	int language;
 };
 cardPos;

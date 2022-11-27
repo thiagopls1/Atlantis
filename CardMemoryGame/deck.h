@@ -4,5 +4,7 @@
 struct deck{
 	int cardId;
 	ALLEGRO_COLOR color;
+	ALLEGRO_BITMAP* image;
+	int language;
 };
 deck;
