@@ -5,5 +5,5 @@
 #include <allegro5/allegro_ttf.h>
 #include <queue>
 
-void destroyGame(ALLEGRO_DISPLAY* display, ALLEGRO_TIMER* timer, ALLEGRO_BITMAP* bitmap, ALLEGRO_FONT* font);
+void destroyGame(ALLEGRO_DISPLAY* display, ALLEGRO_TIMER* timer, ALLEGRO_TIMER* scoreTimer, ALLEGRO_TIMER* cardTimer, ALLEGRO_BITMAP* bitmap, ALLEGRO_FONT* font);
 #endif
