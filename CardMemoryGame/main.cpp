@@ -212,6 +212,8 @@ int main() {
                 }
 
                 if (gameState == 1) {
+                    al_draw_rectangle(15, 16, 120, 48, al_map_rgb(255, 255, 255), 3);
+                    al_draw_text(font, al_map_rgb(255, 255, 255), 70, 10, ALLEGRO_ALIGN_CENTRE, "Voltar");
                     al_draw_text(biggerFont, al_map_rgb(255, 255, 255), displayX / 2, 50, ALLEGRO_ALIGN_CENTRE, "Selecione a dificuldade:");
                     al_draw_rectangle(
                         displayX / 2 - 355, displayY / 2 - 20,
@@ -261,10 +263,10 @@ int main() {
                 if (gameState == 3 || gameState == 4) {
                     al_draw_bitmap(cat, catX, catY, 0);
                     drawCards(card, currentCards);
-                    al_draw_rectangle(38, 16, 98, 48, al_map_rgb(255, 255, 255), 3);
+                    al_draw_rectangle(15, 16, 120, 48, al_map_rgb(255, 255, 255), 3);
+                    al_draw_text(font, al_map_rgb(255, 255, 255), 70, 10, ALLEGRO_ALIGN_CENTRE, "Voltar");
                     al_draw_rectangle(320, 700, 1250, 600, al_map_rgb(255, 255, 255), 3); // Caixa de diálogo
                     al_draw_text(font, al_map_rgb(255, 255, 255), 330, 600, 0, dialogText);
-                    al_draw_text(font, al_map_rgb(255, 255, 255), 70, 10, ALLEGRO_ALIGN_CENTRE, "Sair");
                     al_draw_textf(font, al_map_rgb(255, 255, 255), 400, 10, 0, "Tempo restante: %d", timeLeft - al_get_timer_count(scoreTimer));
                     al_draw_textf(font, al_map_rgb(255, 255, 255), 800, 10, 0, "Movimentos: %d", movement);
                     al_draw_textf(font, al_map_rgb(255, 255, 255), 1000, 10, 0, "Pontos: %d", score);
@@ -499,9 +501,9 @@ int main() {
                 gameState = 0;
             }
             //-------------------------------BOTÕES DO GAME STATE 3 (Playing)---------------------------------//
-            if (mouseX >= 38 && mouseY >= 16 &&
-                mouseX <= 98 && mouseY <= 48 &&
-                gameState == 3
+            if (mouseX >= 15 && mouseY >= 16 &&
+                mouseX <= 120 && mouseY <= 48 &&
+                gameState == 3 || gameState == 1
                 ) {
                 // SAIR
                 gameState = 0;
