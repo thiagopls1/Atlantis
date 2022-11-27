@@ -70,7 +70,6 @@ int main() {
 
     //-------------------------------PREENCHENDO O STRUCT---------------------------------//
     cardPos card[8]{};
-    deck cardData[4];
 
     deck cardEasy[16];
     deck cardMedium[16];
@@ -78,67 +77,62 @@ int main() {
     
     deck currentCards[16];
     
-    cardData[0] = { 0, al_map_rgb(250, 200, 250) };
-    cardData[1] = { 1, al_map_rgb(250, 250, 0) };
-    cardData[2] = { 2, al_map_rgb(0, 250, 250) };
-    cardData[3] = { 3, al_map_rgb(75, 75, 75) };
-    
     //-------------------------------EASY---------------------------------//
-    cardEasy[0] = { 0, al_map_rgb(250, 200, 250), al_load_bitmap("./assets/card/easy/amigo.png"), 0};
-    cardEasy[1] = { 1, al_map_rgb(250, 250, 0), al_load_bitmap("./assets/card/easy/bola.png") , 0 };
-    cardEasy[2] = { 2, al_map_rgb(0, 250, 250), al_load_bitmap("./assets/card/easy/cachorro.png"), 0 };
-    cardEasy[3] = { 3, al_map_rgb(75, 75, 75), al_load_bitmap("./assets/card/easy/cadeira.png"), 0 };
-    cardEasy[4] = { 3, al_map_rgb(75, 75, 75), al_load_bitmap("./assets/card/easy/espada.png"), 0 };
-    cardEasy[5] = { 3, al_map_rgb(75, 75, 75), al_load_bitmap("./assets/card/easy/gato.png"), 0 };
-    cardEasy[6] = { 3, al_map_rgb(75, 75, 75), al_load_bitmap("./assets/card/easy/ola.png"), 0 };
-    cardEasy[7] = { 3, al_map_rgb(75, 75, 75), al_load_bitmap("./assets/card/easy/peixe.png"), 0 };
+    cardEasy[0] = { 0, al_load_bitmap("./assets/card/easy/amigo.png"), 0};
+    cardEasy[1] = { 1, al_load_bitmap("./assets/card/easy/bola.png") , 0 };
+    cardEasy[2] = { 2, al_load_bitmap("./assets/card/easy/cachorro.png"), 0 };
+    cardEasy[3] = { 3, al_load_bitmap("./assets/card/easy/cadeira.png"), 0 };
+    cardEasy[4] = { 3, al_load_bitmap("./assets/card/easy/espada.png"), 0 };
+    cardEasy[5] = { 3, al_load_bitmap("./assets/card/easy/gato.png"), 0 };
+    cardEasy[6] = { 3, al_load_bitmap("./assets/card/easy/ola.png"), 0 };
+    cardEasy[7] = { 3, al_load_bitmap("./assets/card/easy/peixe.png"), 0 };
 
-    cardEasy[8] = { 0, al_map_rgb(250, 200, 250), al_load_bitmap("./assets/card/easy/friend.png"), 1 };
-    cardEasy[9] = { 1, al_map_rgb(250, 250, 0), al_load_bitmap("./assets/card/easy/ball.png"), 1 };
-    cardEasy[10] = { 2, al_map_rgb(0, 250, 250), al_load_bitmap("./assets/card/easy/dog.png"), 1 };
-    cardEasy[11] = { 3, al_map_rgb(75, 75, 75), al_load_bitmap("./assets/card/easy/chair.png"), 1 };
-    cardEasy[12] = { 3, al_map_rgb(75, 75, 75), al_load_bitmap("./assets/card/easy/sword.png"), 1 };
-    cardEasy[13] = { 3, al_map_rgb(75, 75, 75), al_load_bitmap("./assets/card/easy/cat.png"), 1 };
-    cardEasy[14] = { 3, al_map_rgb(75, 75, 75), al_load_bitmap("./assets/card/easy/hello.png"), 1 };
-    cardEasy[15] = { 3, al_map_rgb(75, 75, 75), al_load_bitmap("./assets/card/easy/fish.png"), 1 };
+    cardEasy[8] = { 0,  al_load_bitmap("./assets/card/easy/friend.png"), 1 };
+    cardEasy[9] = { 1,  al_load_bitmap("./assets/card/easy/ball.png"), 1 };
+    cardEasy[10] = { 2, al_load_bitmap("./assets/card/easy/dog.png"), 1 };
+    cardEasy[11] = { 3, al_load_bitmap("./assets/card/easy/chair.png"), 1 };
+    cardEasy[12] = { 3, al_load_bitmap("./assets/card/easy/sword.png"), 1 };
+    cardEasy[13] = { 3, al_load_bitmap("./assets/card/easy/cat.png"), 1 };
+    cardEasy[14] = { 3, al_load_bitmap("./assets/card/easy/hello.png"), 1 };
+    cardEasy[15] = { 3, al_load_bitmap("./assets/card/easy/fish.png"), 1 };
 
     //-------------------------------MEDIUM---------------------------------//
-    cardMedium[0] = { 0, al_map_rgb(250, 200, 250), al_load_bitmap("./assets/card/medium/obrigado.png"), 0 };
-    cardMedium[1] = { 1, al_map_rgb(250, 250, 0), al_load_bitmap("./assets/card/medium/morango.png") , 0 };
-    cardMedium[2] = { 2, al_map_rgb(0, 250, 250), al_load_bitmap("./assets/card/medium/framboesa.png"), 0 };
-    cardMedium[3] = { 3, al_map_rgb(75, 75, 75), al_load_bitmap("./assets/card/medium/banheiro.png"), 0 };
-    cardMedium[4] = { 3, al_map_rgb(75, 75, 75), al_load_bitmap("./assets/card/easy/espada.png"), 0 };
-    cardMedium[5] = { 3, al_map_rgb(75, 75, 75), al_load_bitmap("./assets/card/easy/gato.png"), 0 };
-    cardMedium[6] = { 3, al_map_rgb(75, 75, 75), al_load_bitmap("./assets/card/easy/ola.png"), 0 };
-    cardMedium[7] = { 3, al_map_rgb(75, 75, 75), al_load_bitmap("./assets/card/easy/peixe.png"), 0 };
+    cardMedium[0] = { 0, al_load_bitmap("./assets/card/medium/obrigado.png"), 0 };
+    cardMedium[1] = { 1, al_load_bitmap("./assets/card/medium/morango.png") , 0 };
+    cardMedium[2] = { 2, al_load_bitmap("./assets/card/medium/framboesa.png"), 0 };
+    cardMedium[3] = { 3, al_load_bitmap("./assets/card/medium/banheiro.png"), 0 };
+    cardMedium[4] = { 3, al_load_bitmap("./assets/card/easy/espada.png"), 0 };
+    cardMedium[5] = { 3, al_load_bitmap("./assets/card/easy/gato.png"), 0 };
+    cardMedium[6] = { 3, al_load_bitmap("./assets/card/easy/ola.png"), 0 };
+    cardMedium[7] = { 3, al_load_bitmap("./assets/card/easy/peixe.png"), 0 };
 
-    cardMedium[8] = { 0, al_map_rgb(250, 200, 250), al_load_bitmap("./assets/card/medium/thankyou.png"), 1 };
-    cardMedium[9] = { 1, al_map_rgb(250, 250, 0), al_load_bitmap("./assets/card/medium/strawberry.png"), 1 };
-    cardMedium[10] = { 2, al_map_rgb(0, 250, 250), al_load_bitmap("./assets/card/medium/raspberry.png"), 1 };
-    cardMedium[11] = { 3, al_map_rgb(75, 75, 75), al_load_bitmap("./assets/card/medium/restroom.png"), 1 };
-    cardMedium[12] = { 3, al_map_rgb(75, 75, 75), al_load_bitmap("./assets/card/easy/sword.png"), 1 };
-    cardMedium[13] = { 3, al_map_rgb(75, 75, 75), al_load_bitmap("./assets/card/easy/cat.png"), 1 };
-    cardMedium[14] = { 3, al_map_rgb(75, 75, 75), al_load_bitmap("./assets/card/easy/hello.png"), 1 };
-    cardMedium[15] = { 3, al_map_rgb(75, 75, 75), al_load_bitmap("./assets/card/easy/fish.png"), 1 };
+    cardMedium[8] = { 0,  al_load_bitmap("./assets/card/medium/thankyou.png"), 1 };
+    cardMedium[9] = { 1,  al_load_bitmap("./assets/card/medium/strawberry.png"), 1 };
+    cardMedium[10] = { 2, al_load_bitmap("./assets/card/medium/raspberry.png"), 1 };
+    cardMedium[11] = { 3, al_load_bitmap("./assets/card/medium/restroom.png"), 1 };
+    cardMedium[12] = { 3, al_load_bitmap("./assets/card/easy/sword.png"), 1 };
+    cardMedium[13] = { 3, al_load_bitmap("./assets/card/easy/cat.png"), 1 };
+    cardMedium[14] = { 3, al_load_bitmap("./assets/card/easy/hello.png"), 1 };
+    cardMedium[15] = { 3, al_load_bitmap("./assets/card/easy/fish.png"), 1 };
 
     //-------------------------------HARD---------------------------------//
-    cardHard[0] = { 3, al_map_rgb(75, 75, 75), al_load_bitmap("./assets/card/hard/cve.png"), 0 };
-    cardHard[1] = { 3, al_map_rgb(75, 75, 75), al_load_bitmap("./assets/card/hard/dove.png"), 0 };
-    cardHard[2] = { 3, al_map_rgb(75, 75, 75), al_load_bitmap("./assets/card/hard/evp.png"), 0 };
-    cardHard[3] = { 3, al_map_rgb(75, 75, 75), al_load_bitmap("./assets/card/hard/qesn.png"), 0 };
-    cardHard[4] = { 0, al_map_rgb(250, 200, 250), al_load_bitmap("./assets/card/medium/obrigado.png"), 0 };
-    cardHard[5] = { 1, al_map_rgb(250, 250, 0), al_load_bitmap("./assets/card/medium/morango.png") , 0 };
-    cardHard[6] = { 2, al_map_rgb(0, 250, 250), al_load_bitmap("./assets/card/medium/framboesa.png"), 0 };
-    cardHard[7] = { 3, al_map_rgb(75, 75, 75), al_load_bitmap("./assets/card/medium/banheiro.png"), 0 };
+    cardHard[0] = { 3, al_load_bitmap("./assets/card/hard/cve.png"), 0 };
+    cardHard[1] = { 3, al_load_bitmap("./assets/card/hard/dove.png"), 0 };
+    cardHard[2] = { 3, al_load_bitmap("./assets/card/hard/evp.png"), 0 };
+    cardHard[3] = { 3, al_load_bitmap("./assets/card/hard/qesn.png"), 0 };
+    cardHard[4] = { 0, al_load_bitmap("./assets/card/medium/obrigado.png"), 0 };
+    cardHard[5] = { 1, al_load_bitmap("./assets/card/medium/morango.png") , 0 };
+    cardHard[6] = { 2, al_load_bitmap("./assets/card/medium/framboesa.png"), 0 };
+    cardHard[7] = { 3, al_load_bitmap("./assets/card/medium/banheiro.png"), 0 };
         
-    cardHard[8] = { 3, al_map_rgb(75, 75, 75), al_load_bitmap("./assets/card/hard/hay.png"), 1 };
-    cardHard[9] = { 3, al_map_rgb(75, 75, 75), al_load_bitmap("./assets/card/hard/wayf.png"), 1 };
-    cardHard[10] = { 3, al_map_rgb(75, 75, 75), al_load_bitmap("./assets/card/hard/igt.png"), 1 };
-    cardHard[11] = { 3, al_map_rgb(75, 75, 75), al_load_bitmap("./assets/card/hard/wiyn.png"), 1 };
-    cardHard[12] = { 0, al_map_rgb(250, 200, 250), al_load_bitmap("./assets/card/medium/thankyou.png"), 1 };
-    cardHard[13] = { 1, al_map_rgb(250, 250, 0), al_load_bitmap("./assets/card/medium/strawberry.png"), 1 };
-    cardHard[14] = { 2, al_map_rgb(0, 250, 250), al_load_bitmap("./assets/card/medium/raspberry.png"), 1 };
-    cardHard[15] = { 3, al_map_rgb(75, 75, 75), al_load_bitmap("./assets/card/medium/restroom.png"), 1 };
+    cardHard[8] = { 3,  al_load_bitmap("./assets/card/hard/hay.png"), 1 };
+    cardHard[9] = { 3,  al_load_bitmap("./assets/card/hard/wayf.png"), 1 };
+    cardHard[10] = { 3, al_load_bitmap("./assets/card/hard/igt.png"), 1 };
+    cardHard[11] = { 3, al_load_bitmap("./assets/card/hard/wiyn.png"), 1 };
+    cardHard[12] = { 0, al_load_bitmap("./assets/card/medium/thankyou.png"), 1 };
+    cardHard[13] = { 1, al_load_bitmap("./assets/card/medium/strawberry.png"), 1 };
+    cardHard[14] = { 2, al_load_bitmap("./assets/card/medium/raspberry.png"), 1 };
+    cardHard[15] = { 3, al_load_bitmap("./assets/card/medium/restroom.png"), 1 };
     //-------------------------------VARIÁVEIS DO ALLEGRO---------------------------------//
 
     ALLEGRO_DISPLAY* display = al_create_display(1280, 720); //Dimensões do Display
@@ -191,9 +185,13 @@ int main() {
                     al_set_timer_count(scoreTimer, 0);
                     if (timeOverPenalty == 1) {
                         sprintf_s(dialogText, "Tempo esgotado! você perdeu %d ponto!", timeOverPenalty);
+                        cat = al_load_bitmap("./assets/cat/cat3r.png");
+                        catX = 40, catY = 418;
                     }
                     else {
                         sprintf_s(dialogText, "Tempo esgotado! você perdeu %d pontos!", timeOverPenalty);
+                        cat = al_load_bitmap("./assets/cat/cat3r.png");
+                        catX = 40, catY = 418;
                     }
                     score -= timeOverPenalty;
                 }
@@ -361,7 +359,8 @@ int main() {
                 break;
                 case 3:
                     strcpy_s(dialogText, "É isso, Boa sorte! E cuidado para não deixar o tempo acabar!");
-                    catX = 50, catY = 430;
+                    cat = al_load_bitmap("./assets/cat/cat1r.png");
+                    catX = 15, catY = 458;
                     al_start_timer(scoreTimer);
                 break;
                 }
@@ -392,6 +391,8 @@ int main() {
                         else {
                             score -= wrongCardPenalty;
                             sprintf_s(dialogText, "Puts! Você perdeu %d pontos", wrongCardPenalty);
+                            cat = al_load_bitmap("./assets/cat/cat2r.png");
+                            catX = 15, catY = 458;
                             al_stop_timer(scoreTimer);
                             card[i].flipped = true;
                             al_set_timer_count(cardTimer, 0);

@@ -16,7 +16,6 @@ void drawCards(struct cardPos card[8], struct deck cardData[16]) {
             if (card[i].language == 1) {
                 al_draw_bitmap(cardData[card[i].id + 8].image, card[i].x1, card[i].y1, 0);
             }
-            //al_draw_filled_rectangle(card[i].x1, card[i].y1, card[i].x2, card[i].y2, cardData[card[i].id].color);
         }
         else {
             al_draw_bitmap(cardBack, card[i].x1, card[i].y1, 0);
