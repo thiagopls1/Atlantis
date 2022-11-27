@@ -42,7 +42,7 @@ int main() {
 
     //-------------------------------VARIÁVEIS LOCAIS---------------------------------//
     int mouseX = 0, mouseY = 0;
-    int dialogStep = 0;
+    int dialogStep = 1;
 
     int catX = 40, catY = 440;
 
@@ -55,7 +55,7 @@ int main() {
     int movement = 0, score = 0;
     int cardsFlipped = 0;
 
-    char dialogText[1000] = {"Olá Seja bem vindo(a) ao nosso jogo da memória!!!."}; // MENSAGEM DE BOAS VINDAS (Precisa arrumar a digitação e colocar a quebra de linha)
+    char dialogText[1000] = {"Olá! Bem-vindo ao nosso jogo da memória! (Clique para continuar)"}; // MENSAGEM DE BOAS VINDAS (Precisa arrumar a digitação e colocar a quebra de linha)
     int gameState = 0;
 
     /* 
@@ -148,6 +148,7 @@ int main() {
     ALLEGRO_BITMAP* bitmap; // Background
     ALLEGRO_BITMAP* cat; //VARIÁVEL DOS GATOS
     ALLEGRO_BITMAP* mainMenu; // Menu principal
+    ALLEGRO_BITMAP* instructionsMenu;
     ALLEGRO_FONT* font = al_load_ttf_font("./assets/font/alterebro-pixel.ttf", 40, 0);
     ALLEGRO_FONT* biggerFont = al_load_ttf_font("./assets/font/alterebro-pixel.ttf", 80, 0);
     ALLEGRO_EVENT_QUEUE* queue = al_create_event_queue(); //Cria uma fila de eventos
@@ -164,6 +165,7 @@ int main() {
     bitmap = al_load_bitmap("./assets/bg/tile.png");
     cat = al_load_bitmap("./assets/cat/cat1r.png");
     mainMenu = al_load_bitmap("./assets/bg/main_menu.png");
+    instructionsMenu = al_load_bitmap("./assets/bg/instructions.png");
 
     //-------------------------------ÁUDIOS-----------------------------------------//
     al_reserve_samples(1);
@@ -204,6 +206,10 @@ int main() {
 
                 if (gameState == 0) {
                     al_draw_bitmap(mainMenu, 0, 0, 0); 
+                }
+
+                if (gameState == 2) {
+                    al_draw_bitmap(instructionsMenu, 0, 0, 0);
                 }
 
                 if (gameState == 1) {
@@ -332,27 +338,31 @@ int main() {
             //-------------------------------DIÁLOGO DE TEXTO---------------------------------//
             if (mouseX >= 320 && mouseX <= 1250 && mouseY <= 700 && mouseY >= 600) {
                 switch (dialogStep) {
-                case 0: 
-                    strcpy_s(dialogText, "Neste jogo da memória voce aprenderá Inglês por assimilação (GATO 1)");
+                case 0:
+                    al_set_timer_count(scoreTimer, 0);
+                    al_stop_timer(scoreTimer);
+                    strcpy_s(dialogText, "Olá! Bem-vindo ao nosso jogo da memória! (Clique para continuar)");
                     dialogStep++;
                     cat = al_load_bitmap("./assets/cat/cat1r.png");
                 break;
                 case 1:
-                    strcpy_s(dialogText, "GATO 2");
+                    al_set_timer_count(scoreTimer, 0);
+                    al_stop_timer(scoreTimer);
+                    strcpy_s(dialogText, "Nele você aprenderá inglês por assimilação.");
                     dialogStep++;
                     cat = al_load_bitmap("./assets/cat/cat2r.png");
                     catX = 15, catY = 458;
                 break;
                 case 2:
-                    strcpy_s(dialogText, "GATO 3");
+                    strcpy_s(dialogText, "Clique em duas cartas, se elas forem iguais você ganhará pontos!");
                     dialogStep++;
                     cat = al_load_bitmap("./assets/cat/cat3r.png");
                     catX = 40, catY = 418;
                 break;
                 case 3:
-                    strcpy_s(dialogText, "GATO 3 DNV");
+                    strcpy_s(dialogText, "É isso, Boa sorte! E cuidado para não deixar o tempo acabar!");
                     catX = 50, catY = 430;
-                    dialogStep = 0;
+                    al_start_timer(scoreTimer);
                 break;
                 }
             }
@@ -414,6 +424,7 @@ int main() {
                 gameState == 1
                 ) {
                 // Dificuldade: Fácil
+                dialogStep = 1;
                 for (int i = 0; i < 16; i++) {
                     currentCards[i] = cardEasy[i];
                 }
@@ -431,6 +442,7 @@ int main() {
                 gameState == 1
                 ){
                 // Dificuldade: Média
+                dialogStep = 1;
                 for (int i = 0; i < 16; i++) {
                     currentCards[i] = cardMedium[i];
                 }
@@ -448,6 +460,7 @@ int main() {
                 gameState == 1
                 ) {
                 // Dificuldade: Difícil
+                dialogStep = 1;
                 for (int i = 0; i < 16; i++) {
                     currentCards[i] = cardHard[i];
                 }
@@ -482,6 +495,13 @@ int main() {
                 score = 0;
                 gameState = 0;
             }
+            //-------------------------------BOTÕES DO GAME STATE 2 (Instructions)---------------------------------//
+            if (mouseX >= 250 && mouseY >= 140 &&
+                mouseX <= 300 && mouseY <= 190 &&
+                gameState == 2
+                ) {
+                gameState = 0;
+            }
             //-------------------------------BOTÕES DO GAME STATE 0 (Main Menu)---------------------------------//
             if (mouseX >= 510 && mouseY >= 340 &&
                 mouseX <= 855 && mouseY <= 375 &&
@@ -494,8 +514,8 @@ int main() {
                 gameState == 0
                 ) {
                 gameState = 2;
-            }if (mouseX >= 510 && mouseY >= 540 &&
-                mouseX <= 855 && mouseY <= 575 &&
+            }if (mouseX >= 510 && mouseY >= 575 &&
+                mouseX <= 855 && mouseY <= 630 &&
                 gameState == 0
                 ) {
                 gameState = 5;
