@@ -1,8 +1,12 @@
-﻿  main.cpp
+﻿  drawCards.cpp
 C:\Users\Thiago\source\repos\Atlantis\CardMemoryGame\cardPos.h(10,8): warning C4091: '': ignored on left of 'cardPos' when no variable is declared
 C:\Users\Thiago\source\repos\Atlantis\CardMemoryGame\deck.h(8,5): warning C4091: '': ignored on left of 'deck' when no variable is declared
-C:\Users\Thiago\source\repos\Atlantis\CardMemoryGame\main.cpp(313,51): warning C4477: 'sprintf_s' : format string '%d' requires an argument of type 'int', but variadic argument 1 has type 'int64_t'
-C:\Users\Thiago\source\repos\Atlantis\CardMemoryGame\main.cpp(313,51): message : consider using '%lld' in the format string
-C:\Users\Thiago\source\repos\Atlantis\CardMemoryGame\main.cpp(313,51): message : consider using '%Id' in the format string
-C:\Users\Thiago\source\repos\Atlantis\CardMemoryGame\main.cpp(313,51): message : consider using '%I64d' in the format string
+  main.cpp
+C:\Users\Thiago\source\repos\Atlantis\CardMemoryGame\cardPos.h(10,8): warning C4091: '': ignored on left of 'cardPos' when no variable is declared
+C:\Users\Thiago\source\repos\Atlantis\CardMemoryGame\deck.h(8,5): warning C4091: '': ignored on left of 'deck' when no variable is declared
+C:\Users\Thiago\source\repos\Atlantis\CardMemoryGame\main.cpp(315,51): warning C4477: 'sprintf_s' : format string '%d' requires an argument of type 'int', but variadic argument 1 has type 'int64_t'
+C:\Users\Thiago\source\repos\Atlantis\CardMemoryGame\main.cpp(315,51): message : consider using '%lld' in the format string
+C:\Users\Thiago\source\repos\Atlantis\CardMemoryGame\main.cpp(315,51): message : consider using '%Id' in the format string
+C:\Users\Thiago\source\repos\Atlantis\CardMemoryGame\main.cpp(315,51): message : consider using '%I64d' in the format string
+  Generating Code...
   CardMemoryGame.vcxproj -> C:\Users\Thiago\source\repos\Atlantis\x64\Debug\CardMemoryGame.exe

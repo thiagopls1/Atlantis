@@ -47,7 +47,7 @@ int main() {
     int cardsFlipped = 0;
 
     char dialogText[1000] = {"Olá Seja bem vindo(a) ao nosso jogo da memória!!!."}; // MENSAGEM DE BOAS VINDAS (Precisa arrumar a digitação e colocar a quebra de linha)
-    int gameState = 1;
+    int gameState = 0;
 
     /* 
     Sobre o gameState:
@@ -82,8 +82,9 @@ int main() {
     ALLEGRO_TIMER* timer = al_create_timer(1.0/60);
     ALLEGRO_TIMER* cardTimer = al_create_timer(2.5);
     ALLEGRO_TIMER* scoreTimer = al_create_timer(1);
-    ALLEGRO_BITMAP* bitmap;
+    ALLEGRO_BITMAP* bitmap; // Background
     ALLEGRO_BITMAP* cat; //VARIÁVEL DOS GATOS
+    ALLEGRO_BITMAP* mainMenu; // Menu principal
     ALLEGRO_FONT* font = al_load_ttf_font("./assets/font/alterebro-pixel.ttf", 40, 0);
     ALLEGRO_FONT* biggerFont = al_load_ttf_font("./assets/font/alterebro-pixel.ttf", 80, 0);
     ALLEGRO_EVENT_QUEUE* queue = al_create_event_queue(); //Cria uma fila de eventos
@@ -100,6 +101,7 @@ int main() {
     al_set_window_title(display, "Memory Game");
     bitmap = al_load_bitmap("./assets/bg/tile.png");
     cat = al_load_bitmap("./assets/cat/cat1r.png");
+    mainMenu = al_load_bitmap("./assets/bg/main_menu.png");
 
     //-------------------------------ÁUDIOS-----------------------------------------//
     al_reserve_samples(1);
@@ -139,7 +141,7 @@ int main() {
                 //---------------------------------------------------------------
 
                 if (gameState == 0) {
-                    // Menu
+                    al_draw_bitmap(mainMenu, 0, 0, 0); 
                 }
 
                 if (gameState == 1) {
@@ -343,6 +345,7 @@ int main() {
                 }
             }
             //----------------------------------------------------------------------------//
+
             //-------------------------------BOTÕES DO GAME STATE 1 (Level Select)---------------------------------//
             if (mouseX >= displayX / 2 - 355 && mouseY >= displayY / 2 - 20 &&
                 mouseX <= displayX / 2 - 155 && mouseY <= displayY / 2 + 70 &&
@@ -406,7 +409,20 @@ int main() {
                 // SAIR
                 movement = 0;
                 score = 0;
+                gameState = 0;
+            }
+            //-------------------------------BOTÕES DO GAME STATE 0 (Main Menu)---------------------------------//
+            if (mouseX >= 510 && mouseY >= 340 &&
+                mouseX <= 855 && mouseY <= 375 &&
+                gameState == 0
+                ) {
                 gameState = 1;
+            }
+            if (mouseX >= 510 && mouseY >= 440 &&
+                mouseX <= 855 && mouseY <= 475 &&
+                gameState == 0
+                ) {
+                gameState = 5;
             }
         }
         // Se o usuário clicar no "X", o gameState será 5 e irá fechar o jogo
@@ -414,7 +430,5 @@ int main() {
     }
 
     destroyGame(display, timer, scoreTimer, cardTimer, bitmap, font);
-    al_destroy_sample_instance(songInstance);
-    al_destroy_sample(song);
     return 0;
 }
