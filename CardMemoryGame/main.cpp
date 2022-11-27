@@ -39,6 +39,34 @@ int main() {
     al_install_audio(); //Addon de audio
     al_init_acodec_addon(); //Addon que da suporte as extensoes de áudio
 
+    //-------------------------------VARIÁVEIS DO ALLEGRO---------------------------------//
+
+    ALLEGRO_DISPLAY* display = al_create_display(1280, 720); //Dimensões do Display
+    ALLEGRO_TIMER* timer = al_create_timer(1.0 / 60);
+    ALLEGRO_TIMER* cardTimer = al_create_timer(2.5);
+    ALLEGRO_TIMER* scoreTimer = al_create_timer(1);
+    ALLEGRO_BITMAP* bitmap; // Background
+    ALLEGRO_BITMAP* cat; //VARIÁVEL DOS GATOS
+    ALLEGRO_BITMAP* mainMenu; // Menu principal
+    ALLEGRO_BITMAP* instructionsMenu;
+    ALLEGRO_FONT* font = al_load_ttf_font("./assets/font/alterebro-pixel.ttf", 40, 0);
+    ALLEGRO_FONT* biggerFont = al_load_ttf_font("./assets/font/alterebro-pixel.ttf", 80, 0);
+    ALLEGRO_EVENT_QUEUE* queue = al_create_event_queue(); //Cria uma fila de eventos
+    //ALLEGRO_AUDIO_STREAM* musicaFundo = NULL; //Variável da música de fundo
+    ALLEGRO_SAMPLE_INSTANCE* songInstance = NULL;
+    ALLEGRO_SAMPLE* song = NULL;
+
+    int displayX = al_get_display_width(display);
+    int displayY = al_get_display_height(display);
+
+    //-------------------------------FILA DE EVENTOS---------------------------------//
+    registerEventsSource(queue, display, timer, scoreTimer, cardTimer);
+    al_set_window_title(display, "Memory Game");
+    al_hide_mouse_cursor(display);
+    bitmap = al_load_bitmap("./assets/bg/tile.png");
+    cat = al_load_bitmap("./assets/cat/cat1r.png");
+    mainMenu = al_load_bitmap("./assets/bg/main_menu.png");
+    instructionsMenu = al_load_bitmap("./assets/bg/instructions.png");
 
     //-------------------------------VARIÁVEIS LOCAIS---------------------------------//
     int mouseX = 0, mouseY = 0;
@@ -133,33 +161,6 @@ int main() {
     cardHard[13] = { 1, al_load_bitmap("./assets/card/medium/strawberry.png"), 1 };
     cardHard[14] = { 2, al_load_bitmap("./assets/card/medium/raspberry.png"), 1 };
     cardHard[15] = { 3, al_load_bitmap("./assets/card/medium/restroom.png"), 1 };
-    //-------------------------------VARIÁVEIS DO ALLEGRO---------------------------------//
-
-    ALLEGRO_DISPLAY* display = al_create_display(1280, 720); //Dimensões do Display
-    ALLEGRO_TIMER* timer = al_create_timer(1.0/60);
-    ALLEGRO_TIMER* cardTimer = al_create_timer(2.5);
-    ALLEGRO_TIMER* scoreTimer = al_create_timer(1);
-    ALLEGRO_BITMAP* bitmap; // Background
-    ALLEGRO_BITMAP* cat; //VARIÁVEL DOS GATOS
-    ALLEGRO_BITMAP* mainMenu; // Menu principal
-    ALLEGRO_BITMAP* instructionsMenu;
-    ALLEGRO_FONT* font = al_load_ttf_font("./assets/font/alterebro-pixel.ttf", 40, 0);
-    ALLEGRO_FONT* biggerFont = al_load_ttf_font("./assets/font/alterebro-pixel.ttf", 80, 0);
-    ALLEGRO_EVENT_QUEUE* queue = al_create_event_queue(); //Cria uma fila de eventos
-    //ALLEGRO_AUDIO_STREAM* musicaFundo = NULL; //Variável da música de fundo
-    ALLEGRO_SAMPLE_INSTANCE* songInstance = NULL;
-    ALLEGRO_SAMPLE* song = NULL;
-
-    int displayX = al_get_display_width(display);
-    int displayY = al_get_display_height(display);
-
-    //-------------------------------FILA DE EVENTOS---------------------------------//
-    registerEventsSource(queue, display, timer, scoreTimer, cardTimer);
-    al_set_window_title(display, "Memory Game");
-    bitmap = al_load_bitmap("./assets/bg/tile.png");
-    cat = al_load_bitmap("./assets/cat/cat1r.png");
-    mainMenu = al_load_bitmap("./assets/bg/main_menu.png");
-    instructionsMenu = al_load_bitmap("./assets/bg/instructions.png");
 
     //-------------------------------ÁUDIOS-----------------------------------------//
     al_reserve_samples(1);
@@ -256,10 +257,6 @@ int main() {
                     );
                 }
 
-                if (gameState == 2) {
-                    // Tutorial
-                }
-
 
                 if (gameState == 3 || gameState == 4) {
                     al_draw_bitmap(cat, catX, catY, 0);
@@ -318,7 +315,7 @@ int main() {
                 }
 
                 // Sempre vai ser renderizado (Não colocar condição de gameState)
-                //al_draw_circle(mouseX, mouseY, 5, al_map_rgb(255, 255, 255), 2);
+                al_draw_circle(mouseX, mouseY, 5, al_map_rgb(255, 255, 255), 2);
                 al_flip_display();
                 //---------------------------------------------------------------
             }
@@ -333,6 +330,7 @@ int main() {
         }
 
         if (event.type == ALLEGRO_EVENT_MOUSE_BUTTON_DOWN){
+
             //-------------------------------DIÁLOGO DE TEXTO---------------------------------//
             if (mouseX >= 320 && mouseX <= 1250 && mouseY <= 700 && mouseY >= 600) {
                 switch (dialogStep) {
@@ -384,6 +382,8 @@ int main() {
                             al_stop_timer(scoreTimer);
                             score = (timeLeft - al_get_timer_count(scoreTimer)) + score;
                             sprintf_s(dialogText, "Boa! Você ganhou %d pontos", (timeLeft - al_get_timer_count(scoreTimer)) + 1);
+                            cat = al_load_bitmap("./assets/cat/cat1r.png");
+                            catX = 15, catY = 458;
                             score++;
                             card[i].flipped = true;
                             card[i].locked = true;
