@@ -5,4 +5,5 @@ C:\Users\Thiago\source\repos\Atlantis\CardMemoryGame\main.cpp(388,51): warning C
 C:\Users\Thiago\source\repos\Atlantis\CardMemoryGame\main.cpp(388,51): message : consider using '%lld' in the format string
 C:\Users\Thiago\source\repos\Atlantis\CardMemoryGame\main.cpp(388,51): message : consider using '%Id' in the format string
 C:\Users\Thiago\source\repos\Atlantis\CardMemoryGame\main.cpp(388,51): message : consider using '%I64d' in the format string
+  LINK : C:\Users\Thiago\source\repos\Atlantis\x64\Debug\CardMemoryGame.exe not found or not built by the last incremental link; performing full link
   CardMemoryGame.vcxproj -> C:\Users\Thiago\source\repos\Atlantis\x64\Debug\CardMemoryGame.exe
