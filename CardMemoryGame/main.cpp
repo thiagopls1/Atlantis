@@ -70,7 +70,7 @@ int main() {
 
     //-------------------------------VARIÁVEIS LOCAIS---------------------------------//
     int mouseX = 0, mouseY = 0;
-    int dialogStep = 1;
+    int dialogStep = 0;
 
     int catX = 40, catY = 440;
 
@@ -339,6 +339,9 @@ int main() {
             if (mouseX >= 320 && mouseX <= 1250 && mouseY <= 700 && mouseY >= 600) {
                 switch (dialogStep) {
                 case 0:
+                    for (int i = 0; i < 8; i++) {
+                        card[i].locked = true;
+                    }
                     al_set_timer_count(scoreTimer, 0);
                     al_stop_timer(scoreTimer);
                     strcpy_s(dialogText, "Olá! Bem-vindo ao nosso jogo da memória! (Clique para continuar)");
@@ -346,9 +349,12 @@ int main() {
                     cat = al_load_bitmap("./assets/cat/cat1r.png");
                 break;
                 case 1:
+                    for (int i = 0; i < 8; i++) {
+                        card[i].locked = true;
+                    }
                     al_set_timer_count(scoreTimer, 0);
                     al_stop_timer(scoreTimer);
-                    strcpy_s(dialogText, "Nele você aprenderá inglês por assimilação.");
+                    strcpy_s(dialogText, "Nele você aprenderá inglês por assimilação!");
                     dialogStep++;
                     cat = al_load_bitmap("./assets/cat/cat2r.png");
                     catX = 15, catY = 458;
@@ -360,6 +366,9 @@ int main() {
                     catX = 40, catY = 418;
                 break;
                 case 3:
+                    for (int i = 0; i < 8; i++) {
+                        card[i].locked = false;
+                    }
                     strcpy_s(dialogText, "É isso, Boa sorte! E cuidado para não deixar o tempo acabar!");
                     cat = al_load_bitmap("./assets/cat/cat1r.png");
                     catX = 15, catY = 458;
@@ -429,7 +438,7 @@ int main() {
                 gameState == 1
                 ) {
                 // Dificuldade: Fácil
-                dialogStep = 1;
+                dialogStep = 0;
                 for (int i = 0; i < 16; i++) {
                     currentCards[i] = cardEasy[i];
                 }
@@ -447,7 +456,7 @@ int main() {
                 gameState == 1
                 ){
                 // Dificuldade: Média
-                dialogStep = 1;
+                dialogStep = 0;
                 for (int i = 0; i < 16; i++) {
                     currentCards[i] = cardMedium[i];
                 }
@@ -465,7 +474,7 @@ int main() {
                 gameState == 1
                 ) {
                 // Dificuldade: Difícil
-                dialogStep = 1;
+                dialogStep = 0;
                 for (int i = 0; i < 16; i++) {
                     currentCards[i] = cardHard[i];
                 }
